@@ -4,16 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LIFE FLIP</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
-   LIFE FLIP — Global Styles
-   A retro pixel-art narrative website about a career journey.
+   LIFE FLIP — Hand-Drawn Storybook Journal
+   A pencil-sketch narrative about a career journey.
    Continuous vertical scroll with fade-in moments.
    ========================================================================== */
 
 :root {
-  /* Dusk palette */
+  /* Paper & ink palette */
+  --paper: #f3ecdf;
+  --paper-dark: #e8dcc8;
+  --ink: #3a3530;
+  --ink-light: #6b6460;
+  --pencil: #7a7268;
+  --pencil-light: #9e958b;
+  --tape: rgba(255, 243, 210, 0.75);
+  --tape-shadow: rgba(0,0,0,0.06);
+
+  /* Dusk accent palette (kept for stamps, highlights) */
   --deep-purple: #2a1b3d;
   --mid-purple: #44318d;
   --light-purple: #8265a7;
@@ -23,12 +33,8 @@
   --teal: #2ec4b6;
   --dark-teal: #1a8a7f;
   --cool-blue: #3d5a80;
-  --dark-bg: #1a0f2e;
-  --red: #e05555;
-  --green: #55e085;
-
-  /* Sizing */
-  --pixel: 4px;
+  --red: #c0392b;
+  --green: #55a06b;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,32 +44,37 @@ html {
 }
 
 body {
-  background: var(--dark-bg);
-  color: var(--cream);
+  background: var(--paper);
+  /* Subtle paper fiber texture via layered radial gradients */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(210,195,170,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(195,180,160,0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(220,208,188,0.15) 0%, transparent 60%);
+  color: var(--ink);
   font-family: 'VT323', monospace;
   font-size: 20px;
   overflow-x: hidden;
-  image-rendering: pixelated;
 }
 
-/* Pixel font for headings */
-.pixel-font {
-  font-family: 'Press Start 2P', cursive;
+/* Handwritten font for titles */
+.hand-font {
+  font-family: 'Caveat', cursive;
 }
 
 /* Reduced motion toggle */
 #motion-toggle {
   position: fixed;
-  top: 8px; right: 8px;
+  top: 12px; right: 12px;
   z-index: 1001;
-  background: var(--mid-purple);
-  color: var(--cream);
-  border: 2px solid var(--light-purple);
-  padding: 6px 10px;
+  background: var(--paper-dark);
+  color: var(--ink-light);
+  border: 1px solid var(--pencil-light);
+  padding: 6px 12px;
   font-family: 'VT323', monospace;
   font-size: 14px;
   cursor: pointer;
   opacity: 0.7;
+  border-radius: 4px;
 }
 #motion-toggle:hover { opacity: 1; }
 
@@ -74,7 +85,7 @@ body {
 .moment {
   min-height: 100vh;
   position: relative;
-  padding: 20px;
+  padding: 40px 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -101,34 +112,67 @@ body.reduced-motion .moment {
 }
 
 /* ==========================================================================
-   MOMENT 1: OPENING (title screen)
+   MOMENT TITLES — small, underlined-in-pencil style
+   ========================================================================== */
+
+.moment-title {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: clamp(28px, 5vw, 40px);
+  color: var(--ink);
+  margin-bottom: 28px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+/* Pencil underline */
+.moment-title::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: -8px;
+  right: -8px;
+  height: 2px;
+  background: var(--pencil-light);
+  transform: rotate(-0.5deg);
+  opacity: 0.6;
+  border-radius: 1px;
+}
+
+/* ==========================================================================
+   MOMENT 1: OPENING — paper-textured full-screen
    ========================================================================== */
 
 #moment-opening {
-  background: linear-gradient(180deg, var(--dark-bg) 0%, var(--deep-purple) 60%, #1a0a2e 100%);
+  background: var(--paper);
   text-align: center;
+  min-height: 100vh;
 }
 
 .title-logo {
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(24px, 6vw, 48px);
-  color: var(--burnt-orange);
-  text-shadow: 4px 4px 0 var(--deep-purple), 0 0 20px rgba(224,122,47,0.4);
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(48px, 12vw, 96px);
+  color: var(--ink);
   margin-bottom: 8px;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
+  line-height: 1.1;
 }
 
 .title-subtitle {
-  font-size: clamp(14px, 3vw, 22px);
-  color: var(--light-purple);
+  font-family: 'VT323', monospace;
+  font-size: clamp(16px, 3vw, 24px);
+  color: var(--pencil);
   margin-bottom: 60px;
+  font-style: italic;
 }
 
-/* Begin arrow */
+/* Pencil-drawn arrow that gently sways */
 .begin-arrow {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 12px;
-  color: var(--light-purple);
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--pencil);
   cursor: pointer;
   min-width: 44px;
   min-height: 44px;
@@ -137,438 +181,164 @@ body.reduced-motion .moment {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: color 0.2s;
+  transition: color 0.3s;
 }
-.begin-arrow:hover { color: var(--cream); }
+.begin-arrow:hover { color: var(--ink); }
 
 .begin-arrow .arrow-icon {
-  font-size: 20px;
-  animation: bounce-down 2s infinite;
+  font-size: 28px;
+  display: inline-block;
+  animation: sway-arrow 3s ease-in-out infinite;
+  /* Pencil-drawn look */
+  opacity: 0.6;
 }
 
-@keyframes bounce-down {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-
-/* Pixel stars in background */
-.star {
-  position: absolute;
-  width: 4px; height: 4px;
-  background: var(--cream);
-  opacity: 0.5;
-}
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+@keyframes sway-arrow {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(6px) rotate(2deg); }
 }
 
 /* ==========================================================================
-   MOMENT 2: THE LINE (kitchen scene)
+   SCENE FIGURES — image slots with graceful placeholders
    ========================================================================== */
 
-#moment-the-line {
-  background: linear-gradient(180deg, #1a0a2e 0%, var(--deep-purple) 50%, #1a0f2e 100%);
-}
-
-.moment-title {
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(14px, 4vw, 24px);
-  color: var(--burnt-orange);
-  text-shadow: 2px 2px 0 var(--deep-purple);
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-/* Kitchen CSS art */
-.kitchen-scene {
-  position: relative;
+.scene-figure {
   width: 100%;
-  max-width: 600px;
-  height: 300px;
-  background: #1a1028;
-  border: 3px solid var(--mid-purple);
-  overflow: hidden;
-  margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto 20px;
+  position: relative;
 }
 
-/* Kitchen floor */
-.kitchen-floor {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 50px;
-  background: #2a1f3d;
-  border-top: 3px solid #3a2f4d;
+.scene-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  /* Slight shadow like a taped-in photo */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
 }
 
-/* Counter / prep line */
-.kitchen-counter {
-  position: absolute;
-  bottom: 50px; left: 10%;
-  width: 80%;
-  height: 60px;
-  background: #3a3050;
-  border: 3px solid #4a4060;
-  border-radius: 2px;
+/* Placeholder background while image loads or is missing */
+.scene-figure .scene-placeholder {
+  width: 100%;
+  min-height: 300px;
+  background: var(--paper-dark);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  position: relative;
 }
 
-/* Cutting board */
-.cutting-board {
-  position: absolute;
-  top: 8px; left: 20px;
-  width: 40px; height: 28px;
-  background: #8b6914;
-  border: 2px solid #6b4914;
-}
-
-/* Prep items on counter */
-.prep-bowl {
-  position: absolute;
-  top: 4px;
-  width: 28px; height: 20px;
-  background: #666;
-  border: 2px solid #888;
-  border-radius: 0 0 50% 50%;
-}
-
-/* Heat lamp / warming area */
-.heat-lamp {
-  position: absolute;
-  top: 20px; left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 8px;
-  background: #555;
-  border: 2px solid #777;
-}
-.heat-lamp::after {
-  content: '';
-  position: absolute;
-  bottom: -40px; left: 10%;
-  width: 80%; height: 40px;
-  background: radial-gradient(ellipse, rgba(224,122,47,0.2) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Pixel crew members on the line */
-.crew-member {
-  position: absolute;
-  bottom: 110px;
-}
-.crew-head {
-  width: 14px; height: 14px;
-  margin: 0 auto;
-}
-.crew-body {
-  width: 18px; height: 20px;
-  margin: 0 auto;
-}
-.crew-legs {
-  display: flex; justify-content: center; gap: 2px;
-}
-.crew-leg {
-  width: 7px; height: 14px;
-}
-
-/* Order tickets hanging */
-.ticket-rail {
-  position: absolute;
-  top: 8px; left: 10%; right: 10%;
-  height: 4px;
-  background: #666;
-}
-.order-ticket {
-  position: absolute;
-  top: 4px;
-  width: 24px; height: 32px;
-  background: var(--cream);
-  border: 1px solid #ccc;
-}
-.order-ticket::after {
-  content: '';
-  position: absolute;
-  top: 6px; left: 4px; right: 4px;
-  height: 2px;
-  background: #aaa;
-  box-shadow: 0 5px 0 #aaa, 0 10px 0 #aaa;
-}
-
-.kitchen-caption {
+.scene-placeholder-text {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(18px, 4vw, 28px);
+  color: var(--pencil-light);
   text-align: center;
-  margin-top: 20px;
-  font-size: clamp(16px, 3vw, 24px);
-  color: var(--light-purple);
+  padding: 20px;
   font-style: italic;
 }
 
+/* On image load, hide placeholder */
+.scene-figure img.loaded + .scene-placeholder {
+  display: none;
+}
+
+/* Pencil caption beneath illustrations */
+.scene-caption {
+  text-align: center;
+  margin-top: 16px;
+  font-family: 'VT323', monospace;
+  font-size: clamp(18px, 3.5vw, 26px);
+  color: var(--pencil);
+  font-style: italic;
+  line-height: 1.5;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ==========================================================================
-   MOMENT 3: THE PARTY
+   MOMENT 3: THE PARTY — speech bubbles on tap/hover
    ========================================================================== */
 
 #moment-the-party {
-  background: linear-gradient(180deg, #0d0a1a 0%, #1a0f2e 100%);
-  overflow: hidden;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
-.party-room {
+/* Speech bubbles — reveal on hover or tap */
+.party-bubble-zone {
   position: relative;
-  width: 100%;
-  max-width: 800px;
-  height: 500px;
-  margin: 20px auto;
-  background: #1a1028;
-  border: 3px solid var(--mid-purple);
-  overflow: hidden;
-}
-
-/* Warm light glow effect */
-.party-room::before {
-  content: '';
-  position: absolute;
-  top: -50px; left: 50%;
-  transform: translateX(-50%);
-  width: 300px; height: 200px;
-  background: radial-gradient(ellipse, rgba(244,162,89,0.15) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Floor */
-.party-floor {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 80px;
-  background: #2a1f3d;
-  border-top: 3px solid #3a2f4d;
-}
-
-/* Party groups — hover/tap reveals */
-.party-group {
-  position: absolute;
   cursor: default;
+  display: inline-block;
   min-width: 44px;
   min-height: 44px;
+  margin: 4px;
 }
 
-/* Speech bubble — reveals on hover or tap */
 .speech-bubble {
   position: absolute;
-  background: var(--cream);
-  color: var(--dark-bg);
-  padding: 6px 10px;
-  font-size: 14px;
-  border-radius: 4px;
+  background: white;
+  color: var(--ink);
+  padding: 8px 14px;
+  font-size: 16px;
+  border-radius: 8px;
   opacity: 0;
   pointer-events: none;
   white-space: nowrap;
   z-index: 10;
   transition: opacity 0.6s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  top: -48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'VT323', monospace;
 }
 .speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -8px; left: 20px;
-  border: 4px solid transparent;
-  border-top-color: var(--cream);
+  bottom: -6px; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: white;
 }
 
 /* Desktop: hover to reveal */
 @media (hover: hover) {
-  .party-group:hover .speech-bubble {
+  .party-bubble-zone:hover .speech-bubble {
     opacity: 1;
   }
 }
 /* Touch/tap: .show class toggled by JS */
 .speech-bubble.show { opacity: 1; }
 
-/* Pixel person — built from divs */
-.pixel-person {
-  position: relative;
-}
-.pixel-person .head {
-  width: 16px; height: 16px;
-  background: var(--warm-orange);
-  margin: 0 auto;
-}
-.pixel-person .body {
-  width: 20px; height: 24px;
-  margin: 0 auto;
-}
-.pixel-person .legs {
+.party-bubble-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 4px;
-}
-.pixel-person .leg {
-  width: 8px; height: 16px;
-}
-
-/* Balcony group */
-#balcony-group {
-  top: 60px; right: 20px;
-}
-#balcony-group .railing {
-  width: 100px; height: 4px;
-  background: var(--light-purple);
-  margin-top: 8px;
+  gap: 12px;
+  margin-top: 16px;
+  max-width: 900px;
 }
 
-/* Kitchen group */
-#kitchen-group {
-  top: 120px; left: 20px;
-}
-#kitchen-group .island {
-  width: 100px; height: 40px;
-  background: #3a2f4d;
-  border: 2px solid #4a3f5d;
-  margin-top: 4px;
-}
-/* Red cups */
-.red-cup {
-  width: 8px; height: 12px;
-  background: var(--red);
-  display: inline-block;
-  margin: 2px;
-}
-
-/* Back room */
-#backroom-group {
-  bottom: 100px; left: 20px;
-}
-#backroom-group .doorway {
-  width: 50px; height: 70px;
-  background: #2a1f3d;
-  border: 3px solid #4a3f5d;
-  border-bottom: none;
-  position: relative;
-  overflow: hidden;
-}
-/* Ha ha emotes */
-.emote {
-  position: absolute;
-  font-size: 10px;
-  color: var(--warm-orange);
-  opacity: 0;
-  font-family: 'Press Start 2P', cursive;
-}
-@keyframes emote-float {
-  0% { opacity: 0; transform: translateY(0); }
-  20% { opacity: 0.8; }
-  100% { opacity: 0; transform: translateY(-40px); }
-}
-
-/* Speaker with sound waves */
-#speaker {
-  position: absolute;
-  bottom: 90px; right: 30px;
-}
-.speaker-box {
-  width: 30px; height: 40px;
-  background: #3a3a3a;
-  border: 2px solid #555;
-  position: relative;
-}
-.speaker-cone {
-  width: 16px; height: 16px;
-  background: #222;
-  border-radius: 50%;
-  margin: 8px auto 0;
-}
-.sound-wave {
-  position: absolute;
-  right: -10px; top: 50%;
-  transform: translateY(-50%);
-  width: 20px; height: 20px;
-  border: 2px solid var(--light-purple);
-  border-left: none;
-  border-radius: 0 50% 50% 0;
-  opacity: 0;
-}
-@keyframes sound-pulse {
-  0% { opacity: 0.6; transform: translateY(-50%) scale(0.5); }
-  100% { opacity: 0; transform: translateY(-50%) scale(1.5); }
-}
-
-/* Juan — center, cool-toned, no longer interactive */
-#juan-character {
-  position: absolute;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 5;
-}
-
-.juan-head {
-  width: 20px; height: 20px;
-  background: var(--cool-blue);
-  position: relative;
-}
-/* Eyes that blink */
-.juan-eyes {
-  position: absolute;
-  top: 7px; left: 3px;
-  width: 5px; height: 5px;
-  background: var(--cream);
-  box-shadow: 10px 0 0 var(--cream);
-}
-@keyframes blink {
-  0%, 90%, 100% { height: 5px; }
-  95% { height: 1px; }
-}
-.juan-body {
-  width: 24px; height: 28px;
-  background: var(--cool-blue);
-  margin-top: -2px;
-}
-.juan-legs {
-  display: flex; gap: 4px;
-}
-.juan-leg {
-  width: 10px; height: 20px;
-  background: #2d4a6a;
-}
-
-/* Couch */
-.couch {
-  position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 50px;
-  background: #3a2a5d;
-  border: 3px solid #4a3a6d;
-  border-radius: 4px;
-}
-.couch-arm-left, .couch-arm-right {
-  position: absolute;
-  top: -10px;
-  width: 20px; height: 60px;
-  background: #3a2a5d;
-  border: 3px solid #4a3a6d;
-  border-radius: 4px;
-}
-.couch-arm-left { left: -20px; }
-.couch-arm-right { right: -20px; }
-
-/* Glance animation for Juan */
-@keyframes glance {
-  0%, 70%, 100% { transform: translateX(0); }
-  75% { transform: translateX(3px); }
-  85% { transform: translateX(3px); }
-  90% { transform: translateX(0); }
+.party-bubble-label {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: var(--pencil);
+  padding: 8px 16px;
+  border: 1px dashed var(--pencil-light);
+  border-radius: 8px;
+  cursor: default;
 }
 
 .party-hint {
   text-align: center;
-  margin-top: 12px;
+  margin-top: 16px;
   font-family: 'VT323', monospace;
   font-size: 18px;
-  color: var(--light-purple);
-  opacity: 0.6;
+  color: var(--pencil-light);
+  font-style: italic;
 }
 
 /* ==========================================================================
@@ -576,7 +346,6 @@ body.reduced-motion .moment {
    ========================================================================== */
 
 #moment-the-trick {
-  background: linear-gradient(180deg, #1a0f2e 0%, #0d0a1a 50%, #1a0f2e 100%);
   padding: 40px 20px;
   min-height: auto;
 }
@@ -592,17 +361,19 @@ body.reduced-motion .moment {
   gap: 12px;
 }
 
-/* Each panel — large, with breathing room */
+/* Each panel — sketchbook page look */
 .sketch-panel {
   width: 100%;
   max-width: 560px;
   min-height: 360px;
-  background: var(--deep-purple);
-  border: 3px solid var(--mid-purple);
+  background: white;
+  border: 1px solid var(--pencil-light);
+  border-radius: 4px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   /* Fade in when active */
   opacity: 0;
   transform: scale(0.96);
@@ -619,38 +390,19 @@ body.reduced-motion .sketch-panel {
   transition: none !important;
 }
 
-/* Panel content — pixel skater scenes */
+/* Panel content */
 .panel-scene {
   text-align: center;
   padding: 30px 20px;
 }
 .panel-label {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 12px;
-  color: var(--warm-orange);
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--pencil);
   margin-top: 24px;
 }
 
-/* Pixel skateboard */
-.skateboard {
-  width: 40px; height: 8px;
-  background: var(--burnt-orange);
-  margin: 0 auto;
-  position: relative;
-  border-radius: 2px;
-}
-.skateboard::before, .skateboard::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  width: 8px; height: 6px;
-  background: #666;
-  border-radius: 50%;
-}
-.skateboard::before { left: 4px; }
-.skateboard::after { right: 4px; }
-
-/* Stick figure skater */
+/* Stick figure skater — pencil sketch style */
 .stick-skater {
   width: 20px; height: 40px;
   margin: 0 auto 4px;
@@ -658,18 +410,18 @@ body.reduced-motion .sketch-panel {
 }
 .stick-head {
   width: 12px; height: 12px;
-  background: var(--cream);
+  background: var(--ink);
   border-radius: 50%;
   margin: 0 auto;
 }
 .stick-body-line {
   width: 2px; height: 16px;
-  background: var(--cream);
+  background: var(--ink);
   margin: 0 auto;
 }
 .stick-arms {
   width: 20px; height: 2px;
-  background: var(--cream);
+  background: var(--ink);
   position: absolute;
   top: 16px; left: 0;
 }
@@ -678,36 +430,54 @@ body.reduced-motion .sketch-panel {
 }
 .stick-leg {
   width: 2px; height: 12px;
-  background: var(--cream);
+  background: var(--ink);
   transform-origin: top center;
 }
 .stick-leg.left { transform: rotate(-15deg); }
 .stick-leg.right { transform: rotate(15deg); }
 
-/* BAIL / LAND — handwritten notebook annotations */
+/* Skateboard — pencil line */
+.skateboard {
+  width: 40px; height: 6px;
+  background: var(--ink);
+  margin: 0 auto;
+  position: relative;
+  border-radius: 3px;
+}
+.skateboard::before, .skateboard::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  width: 6px; height: 5px;
+  background: var(--pencil);
+  border-radius: 50%;
+}
+.skateboard::before { left: 4px; }
+.skateboard::after { right: 4px; }
+
+/* Stamps — handwritten notebook annotations */
 .panel-stamp {
   position: absolute;
-  font-family: 'VT323', monospace;
-  letter-spacing: 2px;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  letter-spacing: 1px;
   pointer-events: none;
 }
 
 .panel-stamp.bail {
-  color: #c0392b;
+  color: var(--red);
   font-size: clamp(32px, 8vw, 52px);
   transform: rotate(-8deg);
   top: 20px; right: 24px;
-  opacity: 0.85;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  opacity: 0.75;
 }
 
 .panel-stamp.bail-closer {
-  color: #c0392b;
+  color: var(--red);
   font-size: clamp(24px, 6vw, 38px);
   transform: rotate(5deg);
   bottom: 30px; left: 24px;
-  opacity: 0.75;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  opacity: 0.65;
 }
 
 .panel-stamp.almost {
@@ -715,8 +485,7 @@ body.reduced-motion .sketch-panel {
   font-size: clamp(28px, 7vw, 44px);
   transform: rotate(-4deg);
   top: 24px; left: 20px;
-  opacity: 0.9;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  opacity: 0.8;
 }
 
 .panel-stamp.landed {
@@ -724,9 +493,8 @@ body.reduced-motion .sketch-panel {
   font-size: clamp(36px, 9vw, 60px);
   transform: rotate(-6deg);
   top: 16px; right: 16px;
-  opacity: 0.95;
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
-  letter-spacing: 4px;
+  opacity: 0.9;
+  letter-spacing: 2px;
 }
 
 /* Underline scribble for "landed" */
@@ -734,26 +502,26 @@ body.reduced-motion .sketch-panel {
   content: '';
   position: absolute;
   bottom: -2px; left: -4px; right: -4px;
-  height: 3px;
+  height: 2px;
   background: var(--green);
   opacity: 0.5;
   transform: rotate(1deg);
 }
 
-/* Notebook-style label next to stamp */
+/* Panel note text */
 .panel-note {
   font-family: 'VT323', monospace;
   font-size: clamp(16px, 3vw, 22px);
-  color: var(--light-purple);
+  color: var(--pencil);
   opacity: 0.6;
   margin-top: 20px;
 }
 
 /* Click prompt between panels */
 .sketch-advance {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 11px;
-  color: var(--light-purple);
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: var(--pencil);
   cursor: pointer;
   min-height: 44px;
   min-width: 44px;
@@ -782,190 +550,13 @@ body.reduced-motion .sketch-panel {
 .sketch-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: var(--mid-purple);
+  background: var(--pencil-light);
   transition: background 0.3s;
+  opacity: 0.4;
 }
 .sketch-dot.filled {
-  background: var(--burnt-orange);
-}
-
-/* ==========================================================================
-   MOMENT 5: THE BET — classroom / dojo scene
-   ========================================================================== */
-
-#moment-the-bet {
-  background: linear-gradient(180deg, #1a0f2e 0%, #0d0a1a 50%, #1a0f2e 100%);
-  padding: 40px 20px;
-}
-
-/* Classroom scene — hand-drawn-style dojo/schoolroom */
-.classroom-scene {
-  position: relative;
-  width: 100%;
-  max-width: 520px;
-  height: 300px;
-  margin: 0 auto;
-  background: #1a1028;
-  border: 3px solid var(--mid-purple);
-  overflow: hidden;
-}
-
-/* Chalkboard on the back wall */
-.chalkboard {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 100px;
-  background: #1a3a2a;
-  border: 4px solid #8b6914;
-}
-.chalkboard-text {
-  font-family: 'VT323', monospace;
-  font-size: 16px;
-  color: rgba(245,230,202,0.6);
-  text-align: center;
-  padding: 12px 8px;
-  line-height: 1.4;
-}
-/* Chalk dust marks */
-.chalkboard::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 10%;
-  width: 80%; height: 2px;
-  background: rgba(245,230,202,0.15);
-}
-
-/* Chalk tray */
-.chalk-tray {
-  position: absolute;
-  top: 124px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 210px;
-  height: 8px;
-  background: #6b4914;
-  border: 1px solid #8b6914;
-}
-.chalk-piece {
-  position: absolute;
-  top: -3px;
-  width: 16px;
-  height: 5px;
-  border-radius: 2px;
-}
-
-/* Classroom floor */
-.classroom-floor {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: #2a1f3d;
-  border-top: 3px solid #3a2f4d;
-}
-
-/* Simple desk — rectangular */
-.classroom-desk {
-  position: absolute;
-  bottom: 60px;
-  width: 70px;
-  height: 36px;
-  background: #5a4530;
-  border: 2px solid #7a6540;
-}
-.classroom-desk::after {
-  content: '';
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 16px;
-  background: #5a4530;
-  box-shadow: 24px 0 0 #5a4530, -24px 0 0 #5a4530;
-}
-
-/* Seated pixel figure on a desk — just the upper body visible */
-.desk-figure {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.desk-figure .head {
-  width: 14px; height: 14px;
-  margin: 0 auto;
-}
-.desk-figure .body {
-  width: 18px; height: 16px;
-  margin: 0 auto;
-}
-
-/* Door with EXIT sign — leaving the room */
-.exit-door {
-  position: absolute;
-  right: 20px;
-  bottom: 60px;
-  width: 44px;
-  height: 80px;
-  background: #3a2a5d;
-  border: 3px solid #5a4a7d;
-}
-.exit-sign {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 7px;
-  color: var(--green);
-  background: #1a1028;
-  padding: 2px 6px;
-  border: 1px solid var(--green);
-  letter-spacing: 1px;
-}
-/* Doorknob */
-.exit-door::after {
-  content: '';
-  position: absolute;
-  top: 40px;
-  left: 6px;
-  width: 6px;
-  height: 6px;
-  background: var(--warm-orange);
-  border-radius: 50%;
-}
-
-/* Juan walking toward the door */
-.bet-juan {
-  position: absolute;
-  bottom: 76px;
-  right: 72px;
-  z-index: 3;
-}
-.bet-juan .juan-head {
-  width: 16px; height: 16px;
-}
-.bet-juan .juan-body {
-  width: 20px; height: 22px;
-}
-.bet-juan .juan-legs {
-  gap: 3px;
-}
-.bet-juan .juan-leg {
-  width: 8px; height: 16px;
-}
-
-.bet-caption {
-  text-align: center;
-  margin-top: 24px;
-  font-size: clamp(18px, 4vw, 26px);
-  color: var(--light-purple);
-  max-width: 520px;
-  line-height: 1.6;
-  font-style: italic;
+  background: var(--ink);
+  opacity: 1;
 }
 
 /* ==========================================================================
@@ -973,14 +564,13 @@ body.reduced-motion .sketch-panel {
    ========================================================================== */
 
 #moment-the-realization {
-  background: linear-gradient(180deg, #0d0a1a 0%, var(--dark-bg) 50%, #0d0a1a 100%);
   min-height: 80vh;
 }
 
 .realization-text {
   font-family: 'VT323', monospace;
   font-size: clamp(22px, 5vw, 36px);
-  color: var(--cream);
+  color: var(--ink);
   text-align: center;
   max-width: 600px;
   line-height: 1.6;
@@ -995,7 +585,6 @@ body.reduced-motion .sketch-panel {
    ========================================================================== */
 
 #moment-the-climb {
-  background: linear-gradient(180deg, #0d0a1a 0%, var(--deep-purple) 40%, #1a0f2e 100%);
   padding: 60px 20px;
   min-height: auto;
 }
@@ -1009,16 +598,16 @@ body.reduced-motion .sketch-panel {
   padding: 20px 0 40px;
 }
 
-/* The vertical line */
+/* The vertical line — pencil stroke */
 .climb-timeline::before {
   content: '';
   position: absolute;
   left: 24px;
   top: 0;
   bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--mid-purple) 0%, var(--burnt-orange) 50%, var(--teal) 100%);
-  opacity: 0.5;
+  width: 2px;
+  background: linear-gradient(180deg, var(--pencil-light) 0%, var(--pencil) 50%, var(--pencil-light) 100%);
+  opacity: 0.4;
 }
 
 /* Each waypoint */
@@ -1040,124 +629,47 @@ body.reduced-motion .climb-waypoint {
   transition: none !important;
 }
 
-/* Waypoint icon — small CSS pixel icons */
+/* Waypoint marker — simple pencil dot */
 .waypoint-icon {
   position: absolute;
-  left: 8px;
-  top: 2px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  left: 16px;
+  top: 6px;
+  width: 18px;
+  height: 18px;
+  background: var(--paper);
+  border: 2px solid var(--pencil);
+  border-radius: 50%;
   z-index: 2;
 }
 
-/* Icon: Watchtower — small shield/eye shape */
-.icon-watchtower {
-  width: 20px; height: 20px;
-  background: var(--teal);
-  border: 3px solid var(--dark-teal);
+/* Specific icon accents (small colored dot inside the circle) */
+.waypoint-icon .icon-dot {
+  width: 8px; height: 8px;
   border-radius: 50%;
-  position: relative;
-}
-.icon-watchtower::after {
-  content: '';
   position: absolute;
-  top: 6px; left: 6px;
-  width: 5px; height: 5px;
-  background: var(--cream);
-  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
 }
-
-/* Icon: Ground Level — wrench/screws */
-.icon-ground {
-  width: 18px; height: 18px;
-  background: #666;
-  border: 2px solid #888;
-  position: relative;
-}
-.icon-ground::before {
-  content: '';
-  position: absolute;
-  top: 3px; left: 3px;
-  width: 4px; height: 4px;
-  background: var(--cream);
-  box-shadow: 6px 0 0 var(--cream), 0 6px 0 var(--cream), 6px 6px 0 var(--cream);
-}
-
-/* Icon: Tower — tall building */
-.icon-tower {
-  width: 14px; height: 24px;
-  background: var(--mid-purple);
-  border: 2px solid var(--light-purple);
-  position: relative;
-}
-.icon-tower::before {
-  content: '';
-  position: absolute;
-  top: 3px; left: 2px;
-  width: 3px; height: 3px;
-  background: var(--warm-orange);
-  box-shadow: 5px 0 0 var(--warm-orange), 0 6px 0 var(--warm-orange), 5px 6px 0 var(--warm-orange), 0 12px 0 var(--warm-orange), 5px 12px 0 var(--warm-orange);
-}
-
-/* Icon: Storm — lightning bolt */
-.icon-storm {
-  width: 16px; height: 22px;
-  position: relative;
-}
-.icon-storm::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 4px;
-  width: 0; height: 0;
-  border-left: 6px solid transparent;
-  border-right: 2px solid transparent;
-  border-top: 12px solid var(--warm-orange);
-}
-.icon-storm::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 2px;
-  width: 0; height: 0;
-  border-left: 2px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 12px solid var(--burnt-orange);
-}
-
-/* Icon: White Gloves — glove shape */
-.icon-gloves {
-  width: 18px; height: 20px;
-  background: var(--cream);
-  border: 2px solid #d4c8b0;
-  border-radius: 2px 2px 4px 4px;
-  position: relative;
-}
-.icon-gloves::before {
-  content: '';
-  position: absolute;
-  top: -6px; left: 2px;
-  width: 4px; height: 8px;
-  background: var(--cream);
-  border: 1px solid #d4c8b0;
-  border-radius: 2px 2px 0 0;
-  box-shadow: 5px 0 0 var(--cream), 10px 0 0 var(--cream);
-}
+.icon-dot.watchtower { background: var(--teal); }
+.icon-dot.ground { background: var(--pencil); }
+.icon-dot.tower { background: var(--light-purple); }
+.icon-dot.storm { background: var(--warm-orange); }
+.icon-dot.gloves { background: var(--ink); }
 
 /* Waypoint text */
 .waypoint-title {
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(10px, 2.5vw, 13px);
-  color: var(--burnt-orange);
-  line-height: 1.6;
-  margin-bottom: 6px;
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: clamp(16px, 3vw, 20px);
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 4px;
 }
 
 .waypoint-caption {
   font-family: 'VT323', monospace;
   font-size: clamp(18px, 3.5vw, 24px);
-  color: var(--light-purple);
+  color: var(--pencil);
   line-height: 1.4;
   font-style: italic;
 }
@@ -1186,15 +698,15 @@ body.reduced-motion .fix-beat {
   transition: none !important;
 }
 
-/* Flickering server/monitor */
+/* Server indicator — simple box with blinking light */
 .fix-object {
   width: 60px;
   height: 44px;
   margin: 0 auto 24px;
-  background: #333;
-  border: 3px solid #555;
+  background: var(--paper-dark);
+  border: 2px solid var(--pencil-light);
   position: relative;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 .fix-object::before {
   content: '';
@@ -1208,23 +720,23 @@ body.reduced-motion .fix-beat {
 .fix-object::after {
   content: '';
   position: absolute;
-  top: 8px; right: 8px;
-  width: 24px; height: 4px;
-  background: #555;
-  box-shadow: 0 8px 0 #555, 0 16px 0 #555;
+  top: 10px; right: 8px;
+  width: 20px; height: 3px;
+  background: var(--pencil-light);
+  box-shadow: 0 7px 0 var(--pencil-light), 0 14px 0 var(--pencil-light);
 }
 
 @keyframes server-flicker {
-  0%, 100% { background: var(--red); box-shadow: 0 0 6px rgba(224,85,85,0.6); }
-  30% { background: var(--warm-orange); box-shadow: 0 0 4px rgba(244,162,89,0.4); }
-  60% { background: var(--red); box-shadow: 0 0 8px rgba(224,85,85,0.8); }
+  0%, 100% { background: var(--red); box-shadow: 0 0 6px rgba(192,57,43,0.5); }
+  30% { background: var(--warm-orange); box-shadow: 0 0 4px rgba(244,162,89,0.3); }
+  60% { background: var(--red); box-shadow: 0 0 8px rgba(192,57,43,0.6); }
   80% { background: #993333; box-shadow: none; }
 }
 
 .fix-prompt {
   font-family: 'VT323', monospace;
   font-size: 20px;
-  color: var(--cream);
+  color: var(--ink);
   margin-bottom: 20px;
 }
 
@@ -1238,30 +750,30 @@ body.reduced-motion .fix-beat {
 .fix-option {
   font-family: 'VT323', monospace;
   font-size: 20px;
-  color: var(--cream);
-  background: var(--mid-purple);
-  border: 2px solid var(--light-purple);
+  color: var(--ink);
+  background: white;
+  border: 1px solid var(--pencil-light);
   padding: 10px 18px;
   cursor: pointer;
   min-width: 44px;
   min-height: 44px;
+  border-radius: 4px;
   transition: background 0.2s, opacity 0.3s, border-color 0.3s;
 }
 .fix-option:hover {
-  background: var(--light-purple);
-  color: var(--dark-bg);
+  background: var(--paper-dark);
 }
 .fix-option.wrong {
   opacity: 0.4;
   cursor: default;
-  border-color: #555;
-  background: #2a2a3a;
-  color: #777;
+  border-color: var(--pencil-light);
+  background: var(--paper-dark);
+  color: var(--pencil-light);
   pointer-events: none;
 }
 .fix-option.correct {
   border-color: var(--green);
-  background: rgba(85,224,133,0.15);
+  background: rgba(85,160,107,0.1);
   color: var(--green);
   cursor: default;
   pointer-events: none;
@@ -1269,13 +781,13 @@ body.reduced-motion .fix-beat {
 
 /* Handwritten feedback notes */
 .fix-feedback {
-  font-family: 'VT323', monospace;
-  font-size: 22px;
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
   margin-top: 16px;
   min-height: 30px;
 }
 .fix-feedback.wrong-note {
-  color: var(--light-purple);
+  color: var(--pencil);
   transform: rotate(-2deg);
   opacity: 0.7;
 }
@@ -1286,11 +798,12 @@ body.reduced-motion .fix-beat {
 
 /* Landed stamp for fix beat */
 .fix-landed-stamp {
-  font-family: 'VT323', monospace;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
   font-size: clamp(28px, 7vw, 42px);
   color: var(--green);
   transform: rotate(-6deg);
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   margin-top: 12px;
   opacity: 0;
   transition: opacity 400ms ease;
@@ -1300,23 +813,22 @@ body.reduced-motion .fix-beat {
 }
 
 /* ==========================================================================
-   MOMENT 7: FOOTER
+   FOOTER
    ========================================================================== */
 
 #moment-footer {
-  background: linear-gradient(180deg, var(--dark-bg) 0%, #0d0817 100%);
   min-height: 60vh;
   text-align: center;
   gap: 24px;
 }
 
 .mission-line {
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(12px, 3vw, 20px);
-  color: var(--burnt-orange);
-  text-shadow: 2px 2px 0 var(--deep-purple);
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(20px, 5vw, 36px);
+  color: var(--ink);
   max-width: 500px;
-  line-height: 1.8;
+  line-height: 1.6;
 }
 
 .footer-links {
@@ -1333,7 +845,8 @@ body.reduced-motion .fix-beat {
   color: var(--teal);
   text-decoration: none;
   padding: 8px 16px;
-  border: 2px solid var(--dark-teal);
+  border: 1px solid var(--pencil-light);
+  border-radius: 6px;
   transition: background 0.2s, color 0.2s;
   min-width: 44px;
   min-height: 44px;
@@ -1342,28 +855,30 @@ body.reduced-motion .fix-beat {
   justify-content: center;
 }
 .footer-link:hover {
-  background: var(--dark-teal);
-  color: var(--cream);
+  background: var(--paper-dark);
+  color: var(--dark-teal);
 }
 
-.footer-pixel-divider {
-  width: 60px; height: 4px;
-  background: var(--mid-purple);
+.footer-divider {
+  width: 60px; height: 2px;
+  background: var(--pencil-light);
   margin: 12px auto;
+  opacity: 0.4;
 }
 
 /* ==========================================================================
-   JOURNAL CLIPPINGS — reusable torn-edge cards between moments
-   Swap placeholder icons for real art via /assets/clippings/ later.
+   JOURNAL CLIPPINGS — torn-edge cards with tape corners
    ========================================================================== */
 
 .journal-clipping {
   max-width: 400px;
   width: 90%;
   margin: 0 auto;
-  padding: 24px 28px;
-  background: var(--cream);
+  padding: 28px 32px;
+  background: white;
   position: relative;
+  border-radius: 2px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
   /* Torn / deckled edges via clip-path */
   clip-path: polygon(
     0% 2%, 3% 0%, 8% 3%, 14% 0%, 20% 2%, 26% 0%, 32% 3%, 38% 1%, 44% 3%, 50% 0%,
@@ -1382,30 +897,51 @@ body.reduced-motion .fix-beat {
   transform: translateY(0);
 }
 
-/* Slight rotation variants — applied inline or via data-rotate */
+/* Slight rotation variants */
 .journal-clipping[data-rotate="cw"]  { transform: translateY(0) rotate(1.5deg); }
 .journal-clipping[data-rotate="ccw"] { transform: translateY(0) rotate(-2deg); }
 .journal-clipping[data-rotate="cw"].visible  { transform: translateY(0) rotate(1.5deg); }
 .journal-clipping[data-rotate="ccw"].visible { transform: translateY(0) rotate(-2deg); }
 
-/* Dashed sketch border inside the card */
+/* Tape corner styling — two corners */
 .clipping-inner {
-  border: 2px dashed #c4b8a0;
-  padding: 16px;
   position: relative;
+  padding: 8px 0;
 }
 
-/* Icon placeholder — swap for <img> from /assets/clippings/ later */
+/* Tape strips in corners */
+.journal-clipping::before,
+.journal-clipping::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 16px;
+  background: var(--tape);
+  z-index: 2;
+  box-shadow: 0 1px 2px var(--tape-shadow);
+  border-radius: 1px;
+}
+.journal-clipping::before {
+  top: -2px;
+  left: 12px;
+  transform: rotate(-8deg);
+}
+.journal-clipping::after {
+  bottom: -2px;
+  right: 12px;
+  transform: rotate(5deg);
+}
+
+/* Icon placeholder */
 .clipping-icon {
   width: 40px;
   height: 40px;
   margin: 0 auto 12px;
-  border: 2px dashed #b0a080;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  color: #b0a080;
+  color: var(--pencil-light);
   font-family: 'VT323', monospace;
 }
 
@@ -1413,7 +949,7 @@ body.reduced-motion .fix-beat {
 .clipping-text {
   font-family: 'VT323', monospace;
   font-size: clamp(18px, 4vw, 24px);
-  color: var(--dark-bg);
+  color: var(--ink);
   text-align: center;
   line-height: 1.5;
 }
@@ -1424,7 +960,6 @@ body.reduced-motion .fix-beat {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Not a .moment — doesn't need min-height: 100vh */
 }
 
 /* Clippings inside the climb timeline */
@@ -1434,7 +969,7 @@ body.reduced-motion .fix-beat {
 .climb-clipping .journal-clipping {
   max-width: 340px;
   margin: 0;
-  padding: 18px 22px;
+  padding: 20px 24px;
 }
 
 body.reduced-motion .journal-clipping {
@@ -1457,17 +992,16 @@ body.reduced-motion * {
    ========================================================================== */
 
 @media (max-width: 600px) {
-  .party-room {
-    height: 400px;
-    margin: 10px;
+  .scene-figure {
+    margin: 0 0 16px;
+  }
+  .scene-figure img,
+  .scene-placeholder {
+    border-radius: 4px;
   }
 
   .sketch-panel {
     min-height: 280px;
-  }
-
-  .kitchen-scene {
-    height: 240px;
   }
 
   .climb-waypoint {
@@ -1489,24 +1023,11 @@ body.reduced-motion * {
   }
 
   .journal-clipping {
-    padding: 20px 22px;
+    padding: 22px 24px;
   }
 
-  .classroom-scene {
-    height: 240px;
-  }
-
-  .chalkboard {
-    width: 160px;
-    height: 80px;
-  }
-  .chalkboard-text {
-    font-size: 13px;
-    padding: 8px 6px;
-  }
-  .chalk-tray {
-    top: 104px;
-    width: 170px;
+  .party-bubble-row {
+    gap: 8px;
   }
 }
 </style>
@@ -1523,58 +1044,27 @@ body.reduced-motion * {
 
 <!-- MOMENT 1: OPENING -->
 <section id="moment-opening" class="moment">
-  <div class="title-logo">LIFE FLIP</div>
+  <div class="title-logo">Life Flip</div>
   <div class="title-subtitle">one career, one trick at a time</div>
   <a class="begin-arrow" onclick="document.getElementById('moment-the-line').scrollIntoView({behavior:'smooth'})" role="button" tabindex="0" aria-label="Scroll to begin">
     <span>begin</span>
-    <span class="arrow-icon">&#9660;</span>
+    <span class="arrow-icon">&#8595;</span>
   </a>
 </section>
 
 <!-- MOMENT 2: THE LINE -->
 <section id="moment-the-line" class="moment">
-  <div class="moment-title">THE LINE</div>
-  <div class="kitchen-scene" role="img" aria-label="A pixel-art Chipotle kitchen with crew members working the prep line, order tickets hanging, and a heat lamp">
-    <!-- Ticket rail -->
-    <div class="ticket-rail">
-      <div class="order-ticket" style="left:10%;"></div>
-      <div class="order-ticket" style="left:30%;"></div>
-      <div class="order-ticket" style="left:55%;"></div>
-      <div class="order-ticket" style="left:75%;"></div>
+  <div class="moment-title">The Line</div>
+  <figure class="scene-figure">
+    <img src="assets/the-line.jpg"
+         alt="A pencil sketch of a Chipotle kitchen: crew members working the prep line side by side, order tickets hanging above, steam rising from the warming station"
+         onerror="this.style.display='none'"
+         onload="this.classList.add('loaded')">
+    <div class="scene-placeholder">
+      <div class="scene-placeholder-text">the line — where it started</div>
     </div>
-
-    <!-- Heat lamp -->
-    <div class="heat-lamp"></div>
-
-    <!-- Counter -->
-    <div class="kitchen-counter">
-      <div class="cutting-board"></div>
-      <div class="prep-bowl" style="left:80px;"></div>
-      <div class="prep-bowl" style="left:140px;"></div>
-      <div class="prep-bowl" style="left:200px;"></div>
-    </div>
-
-    <!-- Crew members -->
-    <div class="crew-member" style="left:15%;">
-      <div class="crew-head" style="background:#d4956b;"></div>
-      <div class="crew-body" style="background:var(--red);"></div>
-      <div class="crew-legs"><div class="crew-leg" style="background:#993333;"></div><div class="crew-leg" style="background:#993333;"></div></div>
-    </div>
-    <div class="crew-member" style="left:40%;">
-      <div class="crew-head" style="background:#c4855b;"></div>
-      <div class="crew-body" style="background:var(--red);"></div>
-      <div class="crew-legs"><div class="crew-leg" style="background:#993333;"></div><div class="crew-leg" style="background:#993333;"></div></div>
-    </div>
-    <div class="crew-member" style="left:65%;">
-      <div class="crew-head" style="background:#e0a070;"></div>
-      <div class="crew-body" style="background:var(--red);"></div>
-      <div class="crew-legs"><div class="crew-leg" style="background:#993333;"></div><div class="crew-leg" style="background:#993333;"></div></div>
-    </div>
-
-    <!-- Floor -->
-    <div class="kitchen-floor"></div>
-  </div>
-  <div class="kitchen-caption">Before tech, I learned service under pressure.</div>
+  </figure>
+  <div class="scene-caption">Before tech, I learned service under pressure.</div>
 </section>
 
 <!-- CLIPPING: after The Line -->
@@ -1589,101 +1079,39 @@ body.reduced-motion * {
 
 <!-- MOMENT 3: THE PARTY -->
 <section id="moment-the-party" class="moment">
-  <div class="moment-title">THE PARTY</div>
-  <div class="party-room" id="party-room" role="img" aria-label="A pixel-art house party with groups chatting on the balcony, in the kitchen, and near a back room, with a speaker playing music and a figure sitting alone on the couch">
+  <div class="moment-title">The Party</div>
+  <figure class="scene-figure">
+    <img src="assets/the-party.jpg"
+         alt="A pencil sketch of a house party: groups chatting on a balcony and near the kitchen, a speaker playing music, and a figure sitting alone on the couch watching everyone"
+         onerror="this.style.display='none'"
+         onload="this.classList.add('loaded')">
+    <div class="scene-placeholder">
+      <div class="scene-placeholder-text">the party — everyone belongs but you</div>
+    </div>
+  </figure>
 
-    <!-- Balcony group -->
-    <div class="party-group" id="balcony-group">
-      <div style="display:flex; gap:12px;">
-        <div class="pixel-person">
-          <div class="head" style="background:#d4956b;"></div>
-          <div class="body" style="background:#8844aa;"></div>
-          <div class="legs"><div class="leg" style="background:#554477;"></div><div class="leg" style="background:#554477;"></div></div>
-        </div>
-        <div class="pixel-person">
-          <div class="head" style="background:#c4855b;"></div>
-          <div class="body" style="background:#aa5533;"></div>
-          <div class="legs"><div class="leg" style="background:#774422;"></div><div class="leg" style="background:#774422;"></div></div>
-        </div>
-      </div>
-      <div class="railing"></div>
+  <!-- Speech bubble zones — simple labeled buttons that reveal dialogue -->
+  <div class="party-bubble-row" id="party-bubbles">
+    <div class="party-bubble-zone" id="balcony-zone">
+      <div class="party-bubble-label">balcony crew</div>
       <div class="speech-bubble" id="bubble-balcony">haha... yeah... totally...</div>
     </div>
-
-    <!-- Kitchen group -->
-    <div class="party-group" id="kitchen-group">
-      <div style="display:flex; gap:8px; margin-bottom:4px;">
-        <div class="pixel-person">
-          <div class="head" style="background:#e0a070;"></div>
-          <div class="body" style="background:#cc6633;"></div>
-          <div class="legs"><div class="leg" style="background:#994422;"></div><div class="leg" style="background:#994422;"></div></div>
-        </div>
-        <div class="pixel-person">
-          <div class="head" style="background:#d49060;"></div>
-          <div class="body" style="background:#55aa55;"></div>
-          <div class="legs"><div class="leg" style="background:#337733;"></div><div class="leg" style="background:#337733;"></div></div>
-        </div>
-        <div class="pixel-person">
-          <div class="head" style="background:#c4805a;"></div>
-          <div class="body" style="background:#cc4444;"></div>
-          <div class="legs"><div class="leg" style="background:#993333;"></div><div class="leg" style="background:#993333;"></div></div>
-        </div>
-      </div>
-      <div class="island">
-        <div style="padding:8px;">
-          <div class="red-cup"></div>
-          <div class="red-cup"></div>
-          <div class="red-cup"></div>
-        </div>
-      </div>
+    <div class="party-bubble-zone" id="kitchen-zone">
+      <div class="party-bubble-label">kitchen counter</div>
       <div class="speech-bubble" id="bubble-kitchen">dude... no way... for real?</div>
     </div>
-
-    <!-- Back room -->
-    <div class="party-group" id="backroom-group">
-      <div class="doorway">
-        <div class="emote" id="emote1" style="left:10px; top:20px;">ha</div>
-        <div class="emote" id="emote2" style="left:25px; top:30px;">ha</div>
-        <div class="emote" id="emote3" style="left:15px; top:40px;">ha</div>
-      </div>
-      <div class="speech-bubble" id="bubble-backroom" style="bottom:80px; left:60px;">...and then he... hahaha</div>
-    </div>
-
-    <!-- Speaker -->
-    <div id="speaker">
-      <div class="speaker-box">
-        <div class="speaker-cone"></div>
-      </div>
-      <div class="sound-wave" id="wave1"></div>
-      <div class="sound-wave" id="wave2"></div>
-      <div class="sound-wave" id="wave3"></div>
-    </div>
-
-    <!-- Couch -->
-    <div class="couch">
-      <div class="couch-arm-left"></div>
-      <div class="couch-arm-right"></div>
-    </div>
-
-    <!-- Juan — just sitting, watching -->
-    <div id="juan-character">
-      <div class="juan-head">
-        <div class="juan-eyes" id="juan-eyes"></div>
-      </div>
-      <div class="juan-body"></div>
-      <div class="juan-legs">
-        <div class="juan-leg"></div>
-        <div class="juan-leg"></div>
-      </div>
+    <div class="party-bubble-zone" id="backroom-zone">
+      <div class="party-bubble-label">back room</div>
+      <div class="speech-bubble" id="bubble-backroom">...and then he... hahaha</div>
     </div>
   </div>
 
-  <div class="party-hint">hover over the groups to listen in</div>
+  <div class="party-hint">(linger here — listen in if you like)</div>
 </section>
 
 <!-- THE TRICK — inline sketchbook storyboard -->
 <section id="moment-the-trick" class="moment">
-  <div class="moment-title">THE TRICK</div>
+  <div class="moment-title">The Trick</div>
   <div class="sketchbook" id="sketchbook" aria-label="A sketchbook showing attempts to land a skateboard trick, page by page"></div>
 </section>
 
@@ -1702,62 +1130,19 @@ body.reduced-motion * {
   </div>
 </div>
 
-<!-- THE BET — classroom / leaving scene -->
+<!-- THE BET -->
 <section id="moment-the-bet" class="moment">
-  <div class="moment-title">THE BET</div>
-  <div class="classroom-scene" role="img" aria-label="A pixel-art classroom with desks, a chalkboard, and a figure walking toward the exit door">
-
-    <!-- Chalkboard -->
-    <div class="chalkboard">
-      <div class="chalkboard-text">steady paycheck<br>health insurance<br>comfort zone</div>
+  <div class="moment-title">The Bet</div>
+  <figure class="scene-figure">
+    <img src="assets/the-bet.jpg"
+         alt="A pencil sketch of a classroom: desks with seated figures, a chalkboard listing what's being left behind, and one figure walking toward the exit door"
+         onerror="this.style.display='none'"
+         onload="this.classList.add('loaded')">
+    <div class="scene-placeholder">
+      <div class="scene-placeholder-text">the bet — walking away from comfortable</div>
     </div>
-    <div class="chalk-tray">
-      <div class="chalk-piece" style="left:20px; background:var(--cream);"></div>
-      <div class="chalk-piece" style="left:80px; background:var(--warm-orange);"></div>
-      <div class="chalk-piece" style="left:150px; background:var(--teal);"></div>
-    </div>
-
-    <!-- Desks with seated figures -->
-    <div class="classroom-desk" style="left:30px;">
-      <div class="desk-figure">
-        <div class="head" style="background:#d4956b;"></div>
-        <div class="body" style="background:#8844aa;"></div>
-      </div>
-    </div>
-    <div class="classroom-desk" style="left:140px;">
-      <div class="desk-figure">
-        <div class="head" style="background:#c4855b;"></div>
-        <div class="body" style="background:#cc6633;"></div>
-      </div>
-    </div>
-    <div class="classroom-desk" style="left:250px;">
-      <div class="desk-figure">
-        <div class="head" style="background:#e0a070;"></div>
-        <div class="body" style="background:#55aa55;"></div>
-      </div>
-    </div>
-
-    <!-- Exit door -->
-    <div class="exit-door">
-      <div class="exit-sign">EXIT</div>
-    </div>
-
-    <!-- Juan walking toward the door -->
-    <div class="bet-juan">
-      <div class="juan-head">
-        <div class="juan-eyes"></div>
-      </div>
-      <div class="juan-body"></div>
-      <div class="juan-legs">
-        <div class="juan-leg"></div>
-        <div class="juan-leg"></div>
-      </div>
-    </div>
-
-    <!-- Floor -->
-    <div class="classroom-floor"></div>
-  </div>
-  <div class="bet-caption">I left a steady paycheck to start over at zero. Scary? Yes. But you can't land a trick you never attempt.</div>
+  </figure>
+  <div class="scene-caption">I left a steady paycheck to start over at zero. Scary? Yes. But you can't land a trick you never attempt.</div>
 </section>
 
 <!-- CLIPPING: after The Bet -->
@@ -1772,7 +1157,7 @@ body.reduced-motion * {
 
 <!-- THE CLIMB — rising timeline -->
 <section id="moment-the-climb" class="moment">
-  <div class="moment-title">THE CLIMB</div>
+  <div class="moment-title">The Climb</div>
   <div class="climb-timeline" id="climb-timeline">
     <!-- Waypoints rendered by JS -->
   </div>
@@ -1791,10 +1176,10 @@ body.reduced-motion * {
   </div>
 </div>
 
-<!-- MOMENT 7: FOOTER -->
+<!-- FOOTER -->
 <section id="moment-footer" class="moment">
   <div class="mission-line">I make tech easier for everyone.</div>
-  <div class="footer-pixel-divider"></div>
+  <div class="footer-divider"></div>
   <div class="footer-links">
     <a class="footer-link" href="https://www.linkedin.com/in/saneaux" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
     <a class="footer-link" href="mailto:juansaneaux@protonmail.com">juansaneaux@protonmail.com</a>
@@ -1804,26 +1189,24 @@ body.reduced-motion * {
 <script>
 /* ==========================================================================
    LIFE FLIP — Vertical Scroll Logic
-   Modules: MOMENTS, IntersectionObserver, Party (hover), Sketchbook
-            Storyboard, Realization
+   Hand-drawn storybook journal edition.
    ========================================================================== */
 
 // ==========================================================================
-// MOMENTS — data-driven array for easy extension
+// MOMENTS — data-driven array
 // ==========================================================================
 
 const MOMENTS = [
-  { id: 'opening',         title: 'LIFE FLIP',      render: null },
-  { id: 'the-line',        title: 'THE LINE',           render: null },
-  { id: 'the-party',       title: 'THE PARTY',          render: renderParty },
-  { id: 'the-trick',       title: 'THE TRICK',          render: renderTrick },
-  { id: 'the-realization', title: 'THE REALIZATION',    render: renderRealization },
-  { id: 'the-bet',         title: 'THE BET',            render: null },
-  { id: 'the-climb',       title: 'THE CLIMB',          render: renderClimb },
-  { id: 'footer',          title: 'MISSION',            render: null },
+  { id: 'opening',         title: 'Life Flip',           render: null },
+  { id: 'the-line',        title: 'The Line',            render: null },
+  { id: 'the-party',       title: 'The Party',           render: renderParty },
+  { id: 'the-trick',       title: 'The Trick',           render: renderTrick },
+  { id: 'the-realization', title: 'The Realization',     render: renderRealization },
+  { id: 'the-bet',         title: 'The Bet',             render: null },
+  { id: 'the-climb',       title: 'The Climb',           render: renderClimb },
+  { id: 'footer',          title: 'Mission',             render: null },
 ];
 
-// Track which moments have been rendered (for one-time triggers)
 const momentRendered = new Set();
 
 // ==========================================================================
@@ -1843,7 +1226,6 @@ function initObserver() {
         const el = entry.target;
         el.classList.add('visible');
 
-        // Find matching moment and call render hook if exists
         const momentId = el.id.replace('moment-', '');
         const moment = MOMENTS.find(m => m.id === momentId);
         if (moment && moment.render && !momentRendered.has(momentId)) {
@@ -1861,7 +1243,7 @@ function initObserver() {
     observer.observe(m);
   });
 
-  // Also observe static journal clippings (between moments)
+  // Also observe static journal clippings
   document.querySelectorAll('.clipping-break .journal-clipping').forEach(c => {
     if (document.body.classList.contains('reduced-motion')) {
       c.classList.add('visible');
@@ -1871,64 +1253,24 @@ function initObserver() {
 }
 
 // ==========================================================================
-// PARTY SCENE — hover/tap reveals, ambient animations
+// PARTY — tap/hover speech bubble reveals
 // ==========================================================================
 
 let partyAnimated = false;
 
-/** Render hook — start party animations when it scrolls into view */
 function renderParty(el) {
   if (partyAnimated) return;
   partyAnimated = true;
-  startPartyAnimations();
   initPartyTouchReveal();
 }
 
-/** Start ambient animations in the party scene */
-function startPartyAnimations() {
-  animateSoundWaves();
-  animateEmotes();
-  animateJuan();
-}
-
-/** Pulsing sound waves from the speaker */
-function animateSoundWaves() {
-  if (document.body.classList.contains('reduced-motion')) return;
-  const waves = [document.getElementById('wave1'), document.getElementById('wave2'), document.getElementById('wave3')];
-  waves.forEach((w, i) => {
-    if (w) w.style.animation = `sound-pulse 2s ${i * 0.6}s infinite`;
-  });
-}
-
-/** Floating "ha" emotes from the back room */
-function animateEmotes() {
-  if (document.body.classList.contains('reduced-motion')) return;
-  const emotes = [document.getElementById('emote1'), document.getElementById('emote2'), document.getElementById('emote3')];
-  emotes.forEach((e, i) => {
-    if (e) e.style.animation = `emote-float 3s ${i * 1}s infinite`;
-  });
-}
-
-/** Juan's idle blink and glance */
-function animateJuan() {
-  const eyes = document.getElementById('juan-eyes');
-  if (eyes && !document.body.classList.contains('reduced-motion')) {
-    eyes.style.animation = 'blink 4s infinite';
-    const head = document.querySelector('.juan-head');
-    if (head) head.style.animation = 'glance 6s 2s infinite';
-  }
-}
-
-/** Touch support for speech-bubble reveals (desktop handled by CSS :hover) */
 function initPartyTouchReveal() {
-  const groups = document.querySelectorAll('.party-group');
-  groups.forEach(group => {
-    group.addEventListener('touchstart', (e) => {
-      // Find this group's speech bubble
-      const bubble = group.querySelector('.speech-bubble');
+  const zones = document.querySelectorAll('.party-bubble-zone');
+  zones.forEach(zone => {
+    zone.addEventListener('touchstart', (e) => {
+      const bubble = zone.querySelector('.speech-bubble');
       if (!bubble) return;
       bubble.classList.add('show');
-      // Fade out after a moment
       setTimeout(() => bubble.classList.remove('show'), 2500);
     }, { passive: true });
   });
@@ -1979,7 +1321,6 @@ const STORYBOARD_PANELS = [
 let currentSketchPanel = 0;
 let sketchStarted = false;
 
-/** Render hook — build the sketchbook when the moment scrolls in */
 function renderTrick(el) {
   if (sketchStarted) return;
   sketchStarted = true;
@@ -2024,7 +1365,6 @@ function showSketchPanel() {
   if (!container) return;
 
   if (currentSketchPanel >= STORYBOARD_PANELS.length) {
-    // All panels shown — scroll to The Realization, then natural scroll continues
     setTimeout(() => {
       const realEl = document.getElementById('moment-the-realization');
       if (realEl) {
@@ -2043,13 +1383,12 @@ function showSketchPanel() {
       ${buildPanelHTML(p)}
     </div>
     ${isLast
-      ? '<div class="sketch-advance" onclick="advanceSketch()" role="button" tabindex="0" aria-label="Continue to next section">&#9660; continue</div>'
-      : '<div class="sketch-advance" onclick="advanceSketch()" role="button" tabindex="0" aria-label="Next sketchbook page">&#9660; next page</div>'
+      ? '<div class="sketch-advance" onclick="advanceSketch()" role="button" tabindex="0" aria-label="Continue to next section">&#8595; continue</div>'
+      : '<div class="sketch-advance" onclick="advanceSketch()" role="button" tabindex="0" aria-label="Next sketchbook page">&#8595; next page</div>'
     }
     ${buildDotsHTML()}
   `;
 
-  // Trigger the fade-in after a tick
   requestAnimationFrame(() => {
     const panel = document.getElementById('active-sketch-panel');
     if (panel) panel.classList.add('active');
@@ -2062,18 +1401,15 @@ function advanceSketch() {
 }
 
 // ==========================================================================
-// REALIZATION — centered typewriter, slower pace
+// REALIZATION — centered typewriter
 // ==========================================================================
 
 let realizationStarted = false;
 
-/** Render hook — trigger realization when scrolled into view directly */
 function renderRealization(el) {
-  // Start realization if it hasn't been started by the storyboard path
   startRealizationSequence();
 }
 
-/** The realization typewriter sequence */
 function startRealizationSequence() {
   if (realizationStarted) return;
   realizationStarted = true;
@@ -2091,7 +1427,6 @@ function startRealizationSequence() {
 
   function typeNextLine() {
     if (lineIndex >= lines.length) {
-      // Done — scroll to The Bet after a pause
       setTimeout(() => {
         document.getElementById('moment-the-bet').scrollIntoView({ behavior: 'smooth' });
       }, 2000);
@@ -2101,7 +1436,7 @@ function startRealizationSequence() {
     const line = lines[lineIndex];
     container.textContent = '';
     let charIndex = 0;
-    const speed = 70; // slower than dialogue (70ms vs 40ms)
+    const speed = 70;
 
     if (document.body.classList.contains('reduced-motion')) {
       container.textContent = line;
@@ -2126,7 +1461,7 @@ function startRealizationSequence() {
 }
 
 // ==========================================================================
-// THE CLIMB — rising timeline with waypoints + interactive fix beat
+// THE CLIMB — rising timeline with waypoints + fix beat
 // ==========================================================================
 
 const CLIMB_WAYPOINTS = [
@@ -2163,7 +1498,6 @@ const FIX_OPTIONS = [
   { label: 'Replace the NIC', correct: false },
 ];
 
-// Mid-climb clippings: { afterWaypoint: index, icon, text, rotate }
 const CLIMB_CLIPPINGS = [
   {
     afterWaypoint: 0,
@@ -2187,14 +1521,6 @@ const CLIMB_CLIPPINGS = [
 
 let climbRendered = false;
 
-/**
- * createClipping — reusable helper to build a journal clipping element.
- * @param {string} text   - caption (can include HTML entities)
- * @param {string} icon   - placeholder icon (HTML entity string)
- * @param {string} rotate - 'cw', 'ccw', or '' for no rotation
- * @param {string} [extraClass] - optional extra wrapper class
- * @returns {HTMLElement} the clipping wrapper div
- */
 function createClipping(text, icon, rotate, extraClass) {
   const wrapper = document.createElement('div');
   if (extraClass) wrapper.className = extraClass;
@@ -2213,7 +1539,6 @@ function createClipping(text, icon, rotate, extraClass) {
   return wrapper;
 }
 
-/** Render hook — build waypoints + mid-climb clippings, stagger fade-in */
 function renderClimb(el) {
   if (climbRendered) return;
   climbRendered = true;
@@ -2221,21 +1546,19 @@ function renderClimb(el) {
   const timeline = document.getElementById('climb-timeline');
   if (!timeline) return;
 
-  // Build waypoint HTML, injecting clippings after designated waypoints
   CLIMB_WAYPOINTS.forEach((wp, i) => {
     const div = document.createElement('div');
     div.className = 'climb-waypoint';
     div.setAttribute('data-index', i);
     div.innerHTML = `
       <div class="waypoint-icon" aria-hidden="true">
-        <div class="icon-${wp.icon}"></div>
+        <div class="icon-dot ${wp.icon}"></div>
       </div>
       <div class="waypoint-title">${wp.title}</div>
       <div class="waypoint-caption">${wp.caption}</div>
     `;
     timeline.appendChild(div);
 
-    // Check if a clipping should follow this waypoint
     const clipping = CLIMB_CLIPPINGS.find(c => c.afterWaypoint === i);
     if (clipping) {
       const clip = createClipping(clipping.text, clipping.icon, clipping.rotate, 'climb-clipping');
@@ -2243,7 +1566,6 @@ function renderClimb(el) {
     }
   });
 
-  // Stagger fade-ins for all timeline children (waypoints + clippings)
   const isReduced = document.body.classList.contains('reduced-motion');
   const children = timeline.querySelectorAll('.climb-waypoint, .climb-clipping .journal-clipping');
 
@@ -2254,7 +1576,6 @@ function renderClimb(el) {
     children.forEach((ch, i) => {
       setTimeout(() => {
         ch.classList.add('visible');
-        // After last child, show fix beat
         if (i === children.length - 1) {
           setTimeout(renderFixBeat, 500);
         }
@@ -2263,7 +1584,6 @@ function renderClimb(el) {
   }
 }
 
-/** Build and reveal the interactive fix beat */
 function renderFixBeat() {
   const container = document.getElementById('fix-beat');
   if (!container) return;
@@ -2280,13 +1600,11 @@ function renderFixBeat() {
     <div class="fix-landed-stamp" id="fix-stamp">LANDED</div>
   `;
 
-  // Fade in the fix beat
   requestAnimationFrame(() => {
     container.classList.add('visible');
   });
 }
 
-/** Handle a fix option tap/click */
 function handleFixChoice(index) {
   const opt = FIX_OPTIONS[index];
   const btn = document.querySelector(`.fix-option[data-index="${index}"]`);
@@ -2296,32 +1614,27 @@ function handleFixChoice(index) {
   if (opt.correct) {
     btn.classList.add('correct');
     feedback.className = 'fix-feedback correct-note';
-    feedback.textContent = 'that\'s the one';
+    feedback.textContent = "that's the one";
 
-    // Show landed stamp
     setTimeout(() => {
       const stamp = document.getElementById('fix-stamp');
       if (stamp) stamp.classList.add('show');
     }, 300);
 
-    // Stop the flickering
-    const server = document.querySelector('.fix-object::before');
+    // Stop the flickering — steady green
     const serverEl = document.querySelector('.fix-object');
     if (serverEl) {
-      serverEl.style.setProperty('--fix-resolved', '1');
-      // Replace the flicker with a steady green
       const style = document.createElement('style');
       style.textContent = `
         .fix-object::before {
           animation: none !important;
           background: var(--green) !important;
-          box-shadow: 0 0 8px rgba(85,224,133,0.6) !important;
+          box-shadow: 0 0 8px rgba(85,160,107,0.5) !important;
         }
       `;
       document.head.appendChild(style);
     }
 
-    // Scroll to footer after a pause
     setTimeout(() => {
       document.getElementById('moment-footer').scrollIntoView({ behavior: 'smooth' });
     }, 2500);
@@ -2330,7 +1643,6 @@ function handleFixChoice(index) {
     feedback.className = 'fix-feedback wrong-note';
     feedback.textContent = 'ruled out — good guess';
 
-    // Clear feedback after a moment for next try
     setTimeout(() => {
       feedback.textContent = '';
       feedback.className = 'fix-feedback';
@@ -2348,7 +1660,6 @@ function toggleMotion() {
   body.classList.toggle('reduced-motion');
   btn.textContent = body.classList.contains('reduced-motion') ? 'Motion: OFF' : 'Motion: ON';
 
-  // If reduced motion just turned on, make all moments + clippings visible
   if (body.classList.contains('reduced-motion')) {
     document.querySelectorAll('.moment').forEach(m => m.classList.add('visible'));
     document.querySelectorAll('.journal-clipping').forEach(c => c.classList.add('visible'));
@@ -2363,22 +1674,26 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 }
 
 // ==========================================================================
-// OPENING — decorative stars
+// IMAGE PLACEHOLDER HANDLING
 // ==========================================================================
 
-(function addStars() {
-  const opening = document.getElementById('moment-opening');
-  for (let i = 0; i < 30; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.width = (Math.random() > 0.7 ? 6 : 4) + 'px';
-    star.style.height = star.style.width;
-    star.style.animation = `twinkle ${2 + Math.random() * 3}s ${Math.random() * 2}s infinite`;
-    opening.appendChild(star);
+// When an image loads, hide its sibling placeholder
+document.querySelectorAll('.scene-figure img').forEach(img => {
+  if (img.complete && img.naturalWidth > 0) {
+    img.classList.add('loaded');
+    const placeholder = img.nextElementSibling;
+    if (placeholder && placeholder.classList.contains('scene-placeholder')) {
+      placeholder.style.display = 'none';
+    }
   }
-})();
+  img.addEventListener('load', () => {
+    img.classList.add('loaded');
+    const placeholder = img.nextElementSibling;
+    if (placeholder && placeholder.classList.contains('scene-placeholder')) {
+      placeholder.style.display = 'none';
+    }
+  });
+});
 
 // ==========================================================================
 // INIT
