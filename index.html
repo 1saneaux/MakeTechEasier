@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PIXEL TRICKS</title>
+<title>LIFE FLIP</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
-   PIXEL TRICKS — Global Styles
+   LIFE FLIP — Global Styles
    A retro pixel-art narrative website about a career journey.
    Continuous vertical scroll with fade-in moments.
    ========================================================================== */
@@ -1523,7 +1523,7 @@ body.reduced-motion * {
 
 <!-- MOMENT 1: OPENING -->
 <section id="moment-opening" class="moment">
-  <div class="title-logo">PIXEL TRICKS</div>
+  <div class="title-logo">LIFE FLIP</div>
   <div class="title-subtitle">one career, one trick at a time</div>
   <a class="begin-arrow" onclick="document.getElementById('moment-the-line').scrollIntoView({behavior:'smooth'})" role="button" tabindex="0" aria-label="Scroll to begin">
     <span>begin</span>
@@ -1687,6 +1687,21 @@ body.reduced-motion * {
   <div class="sketchbook" id="sketchbook" aria-label="A sketchbook showing attempts to land a skateboard trick, page by page"></div>
 </section>
 
+<!-- THE REALIZATION -->
+<section id="moment-the-realization" class="moment">
+  <div class="realization-text" id="realization-container"></div>
+</section>
+
+<!-- CLIPPING: after The Realization -->
+<div class="clipping-break" id="clipping-after-realization">
+  <div class="journal-clipping" data-rotate="ccw">
+    <div class="clipping-inner">
+      <div class="clipping-icon" aria-hidden="true">&#9998;</div>
+      <div class="clipping-text">TRY &rarr; BAIL &rarr; CHANGE ONE VARIABLE &rarr; TRY AGAIN &rarr; LAND.<br>Drew this the next morning so I wouldn't forget it.</div>
+    </div>
+  </div>
+</div>
+
 <!-- THE BET — classroom / leaving scene -->
 <section id="moment-the-bet" class="moment">
   <div class="moment-title">THE BET</div>
@@ -1745,21 +1760,6 @@ body.reduced-motion * {
   <div class="bet-caption">I left a steady paycheck to start over at zero. Scary? Yes. But you can't land a trick you never attempt.</div>
 </section>
 
-<!-- THE REALIZATION -->
-<section id="moment-the-realization" class="moment">
-  <div class="realization-text" id="realization-container"></div>
-</section>
-
-<!-- CLIPPING: after The Realization -->
-<div class="clipping-break" id="clipping-after-realization">
-  <div class="journal-clipping" data-rotate="ccw">
-    <div class="clipping-inner">
-      <div class="clipping-icon" aria-hidden="true">&#9998;</div>
-      <div class="clipping-text">TRY &rarr; BAIL &rarr; CHANGE ONE VARIABLE &rarr; TRY AGAIN &rarr; LAND.<br>Drew this the next morning so I wouldn't forget it.</div>
-    </div>
-  </div>
-</div>
-
 <!-- CLIPPING: after The Bet -->
 <div class="clipping-break" id="clipping-after-bet">
   <div class="journal-clipping" data-rotate="cw">
@@ -1770,7 +1770,7 @@ body.reduced-motion * {
   </div>
 </div>
 
-<!-- MOMENT 6: THE CLIMB — rising timeline -->
+<!-- THE CLIMB — rising timeline -->
 <section id="moment-the-climb" class="moment">
   <div class="moment-title">THE CLIMB</div>
   <div class="climb-timeline" id="climb-timeline">
@@ -1803,7 +1803,7 @@ body.reduced-motion * {
 
 <script>
 /* ==========================================================================
-   PIXEL TRICKS — Vertical Scroll Logic
+   LIFE FLIP — Vertical Scroll Logic
    Modules: MOMENTS, IntersectionObserver, Party (hover), Sketchbook
             Storyboard, Realization
    ========================================================================== */
@@ -1813,12 +1813,12 @@ body.reduced-motion * {
 // ==========================================================================
 
 const MOMENTS = [
-  { id: 'opening',         title: 'PIXEL TRICKS',      render: null },
+  { id: 'opening',         title: 'LIFE FLIP',      render: null },
   { id: 'the-line',        title: 'THE LINE',           render: null },
   { id: 'the-party',       title: 'THE PARTY',          render: renderParty },
   { id: 'the-trick',       title: 'THE TRICK',          render: renderTrick },
-  { id: 'the-bet',         title: 'THE BET',            render: null },
   { id: 'the-realization', title: 'THE REALIZATION',    render: renderRealization },
+  { id: 'the-bet',         title: 'THE BET',            render: null },
   { id: 'the-climb',       title: 'THE CLIMB',          render: renderClimb },
   { id: 'footer',          title: 'MISSION',            render: null },
 ];
@@ -2024,10 +2024,13 @@ function showSketchPanel() {
   if (!container) return;
 
   if (currentSketchPanel >= STORYBOARD_PANELS.length) {
-    // All panels shown — scroll to The Bet, then natural scroll continues
+    // All panels shown — scroll to The Realization, then natural scroll continues
     setTimeout(() => {
-      const betEl = document.getElementById('moment-the-bet');
-      if (betEl) betEl.scrollIntoView({ behavior: 'smooth' });
+      const realEl = document.getElementById('moment-the-realization');
+      if (realEl) {
+        realEl.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => startRealizationSequence(), 800);
+      }
     }, 600);
     return;
   }
@@ -2088,9 +2091,9 @@ function startRealizationSequence() {
 
   function typeNextLine() {
     if (lineIndex >= lines.length) {
-      // Done — scroll to The Climb after a pause
+      // Done — scroll to The Bet after a pause
       setTimeout(() => {
-        document.getElementById('moment-the-climb').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('moment-the-bet').scrollIntoView({ behavior: 'smooth' });
       }, 2000);
       return;
     }
