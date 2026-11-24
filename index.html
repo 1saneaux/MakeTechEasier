@@ -202,6 +202,8 @@ body.reduced-motion .moment {
    SCENE FIGURES — image slots with graceful placeholders
    ========================================================================== */
 
+
+/* Scene figure — image slots */
 .scene-figure {
   width: 100%;
   max-width: 900px;
@@ -214,35 +216,17 @@ body.reduced-motion .moment {
   height: auto;
   display: block;
   border-radius: 6px;
-  /* Slight shadow like a taped-in photo */
   box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
 }
 
-/* Placeholder background while image loads or is missing */
-.scene-figure .scene-placeholder {
+/* Panel image inside storyboard */
+.panel-img {
   width: 100%;
-  min-height: 300px;
-  background: var(--paper-dark);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
-  position: relative;
-}
-
-.scene-placeholder-text {
-  font-family: 'Caveat', cursive;
-  font-size: clamp(18px, 4vw, 28px);
-  color: var(--pencil-light);
-  text-align: center;
-  padding: 20px;
-  font-style: italic;
-}
-
-/* On image load, hide placeholder */
-.scene-figure img.loaded + .scene-placeholder {
-  display: none;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  object-fit: contain;
+  max-height: 400px;
 }
 
 /* Pencil caption beneath illustrations */
@@ -402,58 +386,6 @@ body.reduced-motion .sketch-panel {
   margin-top: 24px;
 }
 
-/* Stick figure skater — pencil sketch style */
-.stick-skater {
-  width: 20px; height: 40px;
-  margin: 0 auto 4px;
-  position: relative;
-}
-.stick-head {
-  width: 12px; height: 12px;
-  background: var(--ink);
-  border-radius: 50%;
-  margin: 0 auto;
-}
-.stick-body-line {
-  width: 2px; height: 16px;
-  background: var(--ink);
-  margin: 0 auto;
-}
-.stick-arms {
-  width: 20px; height: 2px;
-  background: var(--ink);
-  position: absolute;
-  top: 16px; left: 0;
-}
-.stick-legs {
-  display: flex; justify-content: center;
-}
-.stick-leg {
-  width: 2px; height: 12px;
-  background: var(--ink);
-  transform-origin: top center;
-}
-.stick-leg.left { transform: rotate(-15deg); }
-.stick-leg.right { transform: rotate(15deg); }
-
-/* Skateboard — pencil line */
-.skateboard {
-  width: 40px; height: 6px;
-  background: var(--ink);
-  margin: 0 auto;
-  position: relative;
-  border-radius: 3px;
-}
-.skateboard::before, .skateboard::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  width: 6px; height: 5px;
-  background: var(--pencil);
-  border-radius: 50%;
-}
-.skateboard::before { left: 4px; }
-.skateboard::after { right: 4px; }
 
 /* Stamps — handwritten notebook annotations */
 .panel-stamp {
@@ -995,11 +927,9 @@ body.reduced-motion * {
   .scene-figure {
     margin: 0 0 16px;
   }
-  .scene-figure img,
-  .scene-placeholder {
+  .scene-figure img {
     border-radius: 4px;
   }
-
   .sketch-panel {
     min-height: 280px;
   }
@@ -1055,15 +985,6 @@ body.reduced-motion * {
 <!-- MOMENT 2: THE LINE -->
 <section id="moment-the-line" class="moment">
   <div class="moment-title">The Line</div>
-  <figure class="scene-figure">
-    <img src="assets/the-line.jpg"
-         alt="A pencil sketch of a Chipotle kitchen: crew members working the prep line side by side, order tickets hanging above, steam rising from the warming station"
-         onerror="this.style.display='none'"
-         onload="this.classList.add('loaded')">
-    <div class="scene-placeholder">
-      <div class="scene-placeholder-text">the line — where it started</div>
-    </div>
-  </figure>
   <div class="scene-caption">Before tech, I learned service under pressure.</div>
 </section>
 
@@ -1080,15 +1001,6 @@ body.reduced-motion * {
 <!-- MOMENT 3: THE PARTY -->
 <section id="moment-the-party" class="moment">
   <div class="moment-title">The Party</div>
-  <figure class="scene-figure">
-    <img src="assets/the-party.jpg"
-         alt="A pencil sketch of a house party: groups chatting on a balcony and near the kitchen, a speaker playing music, and a figure sitting alone on the couch watching everyone"
-         onerror="this.style.display='none'"
-         onload="this.classList.add('loaded')">
-    <div class="scene-placeholder">
-      <div class="scene-placeholder-text">the party — everyone belongs but you</div>
-    </div>
-  </figure>
 
   <!-- Speech bubble zones — simple labeled buttons that reveal dialogue -->
   <div class="party-bubble-row" id="party-bubbles">
@@ -1133,15 +1045,6 @@ body.reduced-motion * {
 <!-- THE BET -->
 <section id="moment-the-bet" class="moment">
   <div class="moment-title">The Bet</div>
-  <figure class="scene-figure">
-    <img src="assets/the-bet.jpg"
-         alt="A pencil sketch of a classroom: desks with seated figures, a chalkboard listing what's being left behind, and one figure walking toward the exit door"
-         onerror="this.style.display='none'"
-         onload="this.classList.add('loaded')">
-    <div class="scene-placeholder">
-      <div class="scene-placeholder-text">the bet — walking away from comfortable</div>
-    </div>
-  </figure>
   <div class="scene-caption">I left a steady paycheck to start over at zero. Scary? Yes. But you can't land a trick you never attempt.</div>
 </section>
 
@@ -1158,6 +1061,9 @@ body.reduced-motion * {
 <!-- THE CLIMB — rising timeline -->
 <section id="moment-the-climb" class="moment">
   <div class="moment-title">The Climb</div>
+  <figure class="scene-figure">
+    <img src="assets/the-climb.jpg" alt="A pencil sketch of a winding road climbing a hillside past a watchtower, buildings, and storm clouds, toward a summit">
+  </figure>
   <div class="climb-timeline" id="climb-timeline">
     <!-- Waypoints rendered by JS -->
   </div>
@@ -1178,6 +1084,9 @@ body.reduced-motion * {
 
 <!-- FOOTER -->
 <section id="moment-footer" class="moment">
+  <figure class="scene-figure">
+    <img src="assets/the-footer.jpg" alt="A pencil sketch of a sunrise over a city skyline, a lone figure with a skateboard looking out from a rooftop">
+  </figure>
   <div class="mission-line">I make tech easier for everyone.</div>
   <div class="footer-divider"></div>
   <div class="footer-links">
@@ -1282,36 +1191,33 @@ function initPartyTouchReveal() {
 
 const STORYBOARD_PANELS = [
   {
-    skater: 'transform:rotate(20deg);',
-    board: 'transform:rotate(-30deg); margin-top:10px;',
+    img: 'assets/trick-1.jpg',
+    alt: 'Pencil sketch: mid-kickflip, about to bail',
     stamp: '<span class="panel-stamp bail">BAIL!</span>',
     note: 'Kickflip attempt #1',
   },
   {
-    skater: '',
-    board: '',
+    img: 'assets/trick-2.jpg',
+    alt: 'Pencil sketch: resetting stance, changing one variable',
     stamp: '',
     note: '&#8635; One variable changed',
     noteColor: 'var(--teal)',
   },
   {
-    skater: 'transform:rotate(10deg);',
-    board: 'transform:rotate(-10deg); margin-top:5px;',
+    img: 'assets/trick-3.jpg',
+    alt: 'Pencil sketch: second attempt, closer to landing',
     stamp: '<span class="panel-stamp bail-closer">bail... closer</span>',
     note: 'Attempt #2',
   },
   {
-    skater: 'transform:translateY(-10px);',
-    board: 'transform:rotate(180deg); margin-top:4px;',
-    arms: 'transform:rotate(-10deg);',
+    img: 'assets/trick-4.jpg',
+    alt: 'Pencil sketch: almost landing, board nearly level',
     stamp: '<span class="panel-stamp almost">almost...!</span>',
     note: '',
   },
   {
-    skater: '',
-    board: '',
-    arms: 'transform:rotate(-5deg);',
-    legsStyle: 'transform:rotate(0);',
+    img: 'assets/trick-5.jpg',
+    alt: 'Pencil sketch: landed the trick, rolling away clean',
     stamp: '<span class="panel-stamp landed">LANDED!</span>',
     note: '&#9733; &#9733; &#9733;',
     noteColor: 'var(--green)',
@@ -1329,22 +1235,11 @@ function renderTrick(el) {
 }
 
 function buildPanelHTML(p) {
-  const armsStyle = p.arms || '';
-  const legsStyle = p.legsStyle || '';
   const noteColor = p.noteColor ? `color:${p.noteColor};` : '';
 
   return `
     <div class="panel-scene">
-      <div class="stick-skater" style="${p.skater}">
-        <div class="stick-head"></div>
-        <div class="stick-body-line"></div>
-        <div class="stick-arms" style="${armsStyle}"></div>
-        <div class="stick-legs">
-          <div class="stick-leg left" style="${legsStyle}"></div>
-          <div class="stick-leg right" style="${legsStyle}"></div>
-        </div>
-      </div>
-      <div class="skateboard" style="${p.board}"></div>
+      <img class="panel-img" src="${p.img}" alt="${p.alt}" onerror="this.style.display='none'">
       ${p.note ? `<div class="panel-note" style="${noteColor}">${p.note}</div>` : ''}
     </div>
     ${p.stamp}
@@ -1677,23 +1572,6 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 // IMAGE PLACEHOLDER HANDLING
 // ==========================================================================
 
-// When an image loads, hide its sibling placeholder
-document.querySelectorAll('.scene-figure img').forEach(img => {
-  if (img.complete && img.naturalWidth > 0) {
-    img.classList.add('loaded');
-    const placeholder = img.nextElementSibling;
-    if (placeholder && placeholder.classList.contains('scene-placeholder')) {
-      placeholder.style.display = 'none';
-    }
-  }
-  img.addEventListener('load', () => {
-    img.classList.add('loaded');
-    const placeholder = img.nextElementSibling;
-    if (placeholder && placeholder.classList.contains('scene-placeholder')) {
-      placeholder.style.display = 'none';
-    }
-  });
-});
 
 // ==========================================================================
 // INIT
