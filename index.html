@@ -424,7 +424,7 @@ body.reduced-motion .sketch-panel {
   color: var(--green);
   font-size: clamp(36px, 9vw, 60px);
   transform: rotate(-6deg);
-  top: 16px; right: 16px;
+  top: 16px; left: 16px;
   opacity: 0.9;
   letter-spacing: 2px;
 }
@@ -447,6 +447,19 @@ body.reduced-motion .sketch-panel {
   color: var(--pencil);
   opacity: 0.6;
   margin-top: 20px;
+}
+
+/* Handwritten margin note: which variable changed this attempt */
+.panel-variable {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(18px, 3.6vw, 24px);
+  color: var(--pencil);
+  margin-top: 6px;
+  transform: rotate(-1.5deg);
+}
+.panel-variable.changed {
+  color: var(--teal);
+  font-weight: 700;
 }
 
 /* Click prompt between panels */
@@ -1192,35 +1205,42 @@ function initPartyTouchReveal() {
 const STORYBOARD_PANELS = [
   {
     img: 'assets/trick-1.jpg',
-    alt: 'Pencil sketch: mid-kickflip, about to bail',
+    alt: 'Pencil sketch: first kickflip attempt, board shoots out and the skater falls backward, wide-eyed',
     stamp: '<span class="panel-stamp bail">BAIL!</span>',
-    note: 'Kickflip attempt #1',
+    note: 'Attempt #1',
+    variable: 'front foot: middle of board &middot; flick: straight down',
   },
   {
     img: 'assets/trick-2.jpg',
-    alt: 'Pencil sketch: resetting stance, changing one variable',
-    stamp: '',
-    note: '&#8635; One variable changed',
-    noteColor: 'var(--teal)',
+    alt: 'Pencil sketch: second attempt with front foot moved back and angled, he gets higher but misses the board and slams down',
+    stamp: '<span class="panel-stamp bail-closer">bail... closer</span>',
+    note: 'Attempt #2',
+    variable: 'changed &rarr; front foot behind the bolts, angled 45&deg;',
+    changed: true,
   },
   {
     img: 'assets/trick-3.jpg',
-    alt: 'Pencil sketch: second attempt, closer to landing',
-    stamp: '<span class="panel-stamp bail-closer">bail... closer</span>',
-    note: 'Attempt #2',
+    alt: 'Pencil sketch: third attempt, front foot flicking off the nose corner with curved motion lines',
+    stamp: '<span class="panel-stamp bail-closer">closer...</span>',
+    note: 'Attempt #3',
+    variable: 'changed &rarr; flick up &amp; out off the nose corner',
+    changed: true,
   },
   {
     img: 'assets/trick-4.jpg',
-    alt: 'Pencil sketch: almost landing, board nearly level',
+    alt: 'Pencil sketch: fourth attempt with a harder pop, knees tucked high as the board flips underneath',
     stamp: '<span class="panel-stamp almost">almost...!</span>',
-    note: '',
+    note: 'Attempt #4',
+    variable: 'changed &rarr; snap the tail harder, knees up',
+    changed: true,
   },
   {
     img: 'assets/trick-5.jpg',
-    alt: 'Pencil sketch: landed the trick, rolling away clean',
+    alt: 'Pencil sketch: landed the kickflip, rolling away clean with a small grin',
     stamp: '<span class="panel-stamp landed">LANDED!</span>',
     note: '&#9733; &#9733; &#9733;',
     noteColor: 'var(--green)',
+    variable: 'same setup &mdash; just committed',
   }
 ];
 
@@ -1241,6 +1261,7 @@ function buildPanelHTML(p) {
     <div class="panel-scene">
       <img class="panel-img" src="${p.img}" alt="${p.alt}" onerror="this.style.display='none'">
       ${p.note ? `<div class="panel-note" style="${noteColor}">${p.note}</div>` : ''}
+      ${p.variable ? `<div class="panel-variable${p.changed ? ' changed' : ''}">${p.changed ? '&#8635; ' : ''}${p.variable}</div>` : ''}
     </div>
     ${p.stamp}
   `;
