@@ -619,6 +619,17 @@ body.reduced-motion .climb-waypoint {
   font-style: italic;
 }
 
+/* Handwritten margin note: the variable that changed at this step */
+.waypoint-variable {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(17px, 3.2vw, 22px);
+  color: var(--teal);
+  margin-top: 4px;
+  transform: rotate(-1deg);
+  transform-origin: left center;
+}
+
 /* ==========================================================================
    THE CLIMB — interactive fix beat
    ========================================================================== */
@@ -643,11 +654,11 @@ body.reduced-motion .fix-beat {
   transition: none !important;
 }
 
-/* Server indicator — simple box with blinking light */
+/* Laptop indicator — screen with a blinking status light and a base */
 .fix-object {
   width: 60px;
-  height: 44px;
-  margin: 0 auto 24px;
+  height: 40px;
+  margin: 0 auto 32px;
   background: var(--paper-dark);
   border: 2px solid var(--pencil-light);
   position: relative;
@@ -665,10 +676,10 @@ body.reduced-motion .fix-beat {
 .fix-object::after {
   content: '';
   position: absolute;
-  top: 10px; right: 8px;
-  width: 20px; height: 3px;
+  bottom: -9px; left: -10px; right: -10px;
+  height: 5px;
   background: var(--pencil-light);
-  box-shadow: 0 7px 0 var(--pencil-light), 0 14px 0 var(--pencil-light);
+  border-radius: 0 0 4px 4px;
 }
 
 @keyframes server-flicker {
@@ -729,7 +740,8 @@ body.reduced-motion .fix-beat {
   font-family: 'Caveat', cursive;
   font-size: 24px;
   margin-top: 16px;
-  min-height: 30px;
+  min-height: 60px;
+  line-height: 1.25;
 }
 .fix-feedback.wrong-note {
   color: var(--pencil);
@@ -774,6 +786,15 @@ body.reduced-motion .fix-beat {
   color: var(--ink);
   max-width: 500px;
   line-height: 1.6;
+}
+
+.mission-recap {
+  font-family: 'VT323', monospace;
+  font-size: clamp(18px, 3.4vw, 24px);
+  color: var(--pencil);
+  max-width: 500px;
+  line-height: 1.4;
+  margin-top: -8px;
 }
 
 .footer-links {
@@ -1080,7 +1101,7 @@ body.reduced-motion * {
   <div class="climb-timeline" id="climb-timeline">
     <!-- Waypoints rendered by JS -->
   </div>
-  <div class="fix-beat" id="fix-beat" aria-label="Interactive troubleshooting challenge: pick the right fix for a flickering server">
+  <div class="fix-beat" id="fix-beat" aria-label="Interactive troubleshooting challenge: pick the first move when one person can't connect to the VPN">
     <!-- Fix beat rendered by JS -->
   </div>
 </section>
@@ -1101,6 +1122,7 @@ body.reduced-motion * {
     <img src="assets/the-footer.jpg" alt="A pencil sketch of a sunrise over a city skyline, a lone figure with a skateboard looking out from a rooftop">
   </figure>
   <div class="mission-line">I make tech easier for everyone.</div>
+  <div class="mission-recap">Try. Change one variable. Write it down.<br>Make it easier for the next person.</div>
   <div class="footer-divider"></div>
   <div class="footer-links">
     <a class="footer-link" href="https://www.linkedin.com/in/saneaux" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
@@ -1336,7 +1358,8 @@ function startRealizationSequence() {
     "He didn't know the fix. He couldn't know. You just... try.",
     'Change one variable. Try again.',
     "That's not just skating.",
-    "That's troubleshooting. That's... everything."
+    "That's troubleshooting. That's... everything.",
+    'And once you land it, you show the next person where to put their feet.'
   ];
 
   let lineIndex = 0;
@@ -1385,33 +1408,50 @@ const CLIMB_WAYPOINTS = [
     icon: 'watchtower',
     title: 'Watchtower — Splunk, 2014–15',
     caption: 'First seat inside the industry: guarding the release pipeline.',
+    changed: 'from serving people to watching systems',
   },
   {
     icon: 'ground',
     title: 'Ground Level — Corovan & Thomas Executive, 2015–17',
     caption: 'Servers, cables, desk moves. I learned tech from the screws up.',
+    changed: 'learned the hardware before the software',
   },
   {
     icon: 'tower',
     title: 'The Tower — First Republic, 2017–23',
     caption: 'Six and a half years, four roles, one floor at a time.',
+    changed: 'stopped fixing, started scripting',
   },
   {
     icon: 'storm',
     title: 'The Storm — First Republic → JPMorganChase, 2023',
     caption: 'One weekend, one migration, nobody left behind.',
+    changed: 'planned for the people, not just the servers',
   },
   {
     icon: 'gloves',
     title: 'White Gloves — Citizens, 2024–now',
     caption: 'AVP now. The chaos is quieter — I spent a decade learning to hear it coming.',
+    changed: 'fix the process, not just the ticket',
   },
 ];
 
 const FIX_OPTIONS = [
-  { label: 'Reboot the switch', correct: false },
-  { label: 'Reseat the cable', correct: true },
-  { label: 'Replace the NIC', correct: false },
+  {
+    label: 'Reimage the laptop',
+    correct: false,
+    note: 'BAIL. Two hours gone, still offline. Changed everything, learned nothing.',
+  },
+  {
+    label: "Try their phone's hotspot",
+    correct: true,
+    note: "Connects on the hotspot. It's the home Wi-Fi. One variable, found it.",
+  },
+  {
+    label: 'Reset their password',
+    correct: false,
+    note: "BAIL. Email works fine. The password was never the variable.",
+  },
 ];
 
 const CLIMB_CLIPPINGS = [
@@ -1472,6 +1512,7 @@ function renderClimb(el) {
       </div>
       <div class="waypoint-title">${wp.title}</div>
       <div class="waypoint-caption">${wp.caption}</div>
+      ${wp.changed ? `<div class="waypoint-variable">&#8635; changed &rarr; ${wp.changed}</div>` : ''}
     `;
     timeline.appendChild(div);
 
@@ -1506,7 +1547,7 @@ function renderFixBeat() {
 
   container.innerHTML = `
     <div class="fix-object"></div>
-    <div class="fix-prompt">Something's blinking red. What's the move?</div>
+    <div class="fix-prompt">Monday, 8am. One teller can't get on the VPN from home. Everyone else is fine. What's the first move?</div>
     <div class="fix-options" id="fix-options">
       ${FIX_OPTIONS.map((opt, i) =>
         `<div class="fix-option" data-index="${i}" onclick="handleFixChoice(${i})" role="button" tabindex="0" aria-label="${opt.label}">${opt.label}</div>`
@@ -1530,16 +1571,16 @@ function handleFixChoice(index) {
   if (opt.correct) {
     btn.classList.add('correct');
     feedback.className = 'fix-feedback correct-note';
-    feedback.textContent = "that's the one";
+    feedback.textContent = opt.note;
 
     setTimeout(() => {
       const stamp = document.getElementById('fix-stamp');
       if (stamp) stamp.classList.add('show');
     }, 300);
 
-    // Stop the flickering — steady green
-    const serverEl = document.querySelector('.fix-object');
-    if (serverEl) {
+    // Stop the blinking — steady green
+    const laptopEl = document.querySelector('.fix-object');
+    if (laptopEl) {
       const style = document.createElement('style');
       style.textContent = `
         .fix-object::before {
@@ -1557,12 +1598,13 @@ function handleFixChoice(index) {
   } else {
     btn.classList.add('wrong');
     feedback.className = 'fix-feedback wrong-note';
-    feedback.textContent = 'ruled out — good guess';
+    feedback.textContent = opt.note;
 
     setTimeout(() => {
+      if (feedback.textContent !== opt.note) return;
       feedback.textContent = '';
       feedback.className = 'fix-feedback';
-    }, 1800);
+    }, 3200);
   }
 }
 

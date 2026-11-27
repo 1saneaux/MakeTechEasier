@@ -36,7 +36,7 @@ pixel-tricks/
 7. *Clipping* — "TRY → BAIL → CHANGE ONE VARIABLE..."
 8. **The Bet** — Walking away from comfortable (caption only, no image currently)
 9. *Clipping* — "Everyone at the table had a reason to stay..."
-10. **The Climb** — Scene image (the-climb.jpg) + interactive timeline with waypoints + fix-beat challenge (pick the right server fix)
+10. **The Climb** — Scene image (the-climb.jpg) + interactive timeline with waypoints + fix-beat challenge (one person can't reach the VPN — pick the first move; hotspot test isolates the variable)
 11. *Clipping* — "Next page is blank..."
 12. **Footer** — Scene image (the-footer.jpg) + mission line + LinkedIn/email links
 
@@ -47,7 +47,8 @@ pixel-tricks/
 - **Storyboard** — `STORYBOARD_PANELS` array, `showSketchPanel()` / `advanceSketch()` click-through
 - **Typewriter** — `startRealizationSequence()` at 70ms/char
 - **Climb waypoints** — staggered fade-in (500ms apart) via `renderClimb()`
-- **Fix beat** — 3 clickable options, wrong→gray+note, correct→green+stamp
+- **Fix beat** — 3 clickable options (`FIX_OPTIONS`, each with its own BAIL/LANDED note), wrong→gray+note, correct→green+stamp
+- **Changed-variable notes** — `variable` on storyboard panels and `changed` on climb waypoints render as teal handwritten "↻ changed →" notes
 - **Auto-scroll chain**: Opening arrow → The Line → Storyboard end → Realization → The Bet → Fix beat correct → Footer
 - **Reduced-motion toggle** — respects `prefers-reduced-motion`, toggle button top-right
 - **Party touch reveal** — `initPartyTouchReveal()` for mobile tap-to-show bubbles
