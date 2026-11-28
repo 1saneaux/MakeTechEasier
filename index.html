@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LIFE FLIP</title>
+<title>LIFE FLIP — from the Chipotle line to IT AVP</title>
+<meta name="description" content="A hand-drawn story of a career in tech: from the Chipotle line to IT AVP, one variable at a time. Try. Change one variable. Write it down. Make it easier for the next person.">
+<meta name="theme-color" content="#f3ecdf">
+
+<!-- Link previews (LinkedIn, iMessage, Slack, X).
+     LinkedIn needs og:image as a full URL. Once the site is hosted, replace
+     the relative path below with e.g. https://<your-site>/assets/trick-5.jpg
+     and add <meta property="og:url" content="https://<your-site>/">. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Life Flip — one career, one trick at a time">
+<meta property="og:description" content="From the Chipotle line to IT AVP. Try. Change one variable. Write it down. Make it easier for the next person.">
+<meta property="og:image" content="assets/trick-5.jpg">
+<meta property="og:image:alt" content="Pencil sketch of a skateboarder rolling away after landing a kickflip">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
@@ -77,6 +90,119 @@ body {
   border-radius: 4px;
 }
 #motion-toggle:hover { opacity: 1; }
+
+/* ==========================================================================
+   SHORT ON TIME — 30-second version
+   ========================================================================== */
+
+.short-btn {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: var(--teal);
+  background: none;
+  border: none;
+  border-bottom: 1px dashed var(--teal);
+  padding: 4px 2px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.short-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+#short-toggle {
+  position: fixed;
+  top: 6px; left: 12px;
+  z-index: 1001;
+  background: var(--paper);
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+#short-toggle.on-opening {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#short-version {
+  border: none;
+  padding: 0;
+  margin: auto; /* the global reset strips the dialog's default centering */
+  background: transparent;
+  max-width: min(520px, 92vw);
+  width: 100%;
+  max-height: 92vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#short-version::backdrop {
+  background: rgba(58, 53, 48, 0.45);
+}
+
+/* Index card: ruled lines, red margin line */
+.short-card {
+  position: relative;
+  background:
+    linear-gradient(to right, transparent 38px, rgba(192,57,43,0.35) 38px, rgba(192,57,43,0.35) 39px, transparent 39px),
+    repeating-linear-gradient(to bottom, white 0, white 25px, rgba(46,196,182,0.18) 25px, rgba(46,196,182,0.18) 26px, white 26px, white 30px);
+  /* Every block is a multiple of 30px so text sits on the ruled lines */
+  padding: 30px 24px 30px 52px;
+  border-radius: 3px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  color: var(--ink);
+}
+
+.short-close {
+  position: absolute;
+  top: 6px; right: 8px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--pencil);
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+}
+.short-close:hover { color: var(--ink); }
+
+.short-title {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(28px, 6vw, 36px);
+  line-height: 30px;
+  margin: 0 0 30px;
+}
+
+.short-list {
+  font-family: 'VT323', monospace;
+  font-size: clamp(17px, 3.4vw, 21px);
+  line-height: 30px;
+  padding-left: 20px;
+  margin: 0 0 30px;
+}
+.short-list li { margin: 0; }
+.short-list b {
+  font-family: 'Caveat', cursive;
+  font-size: 1.15em;
+  color: var(--teal);
+}
+
+.short-mission {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(22px, 5vw, 28px);
+  line-height: 30px;
+  margin: 0 0 30px;
+}
+
+.short-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+}
+
+.opening-short { margin-top: 18px; }
 
 /* ==========================================================================
    MOMENTS — full-width sections, vertical scroll
@@ -1002,6 +1128,28 @@ body.reduced-motion * {
   Motion: ON
 </button>
 
+<button id="short-toggle" class="short-btn" onclick="openShortVersion()" aria-haspopup="dialog">short on time?</button>
+
+<!-- 30-SECOND VERSION — the whole story on one index card -->
+<dialog id="short-version" aria-labelledby="short-title">
+  <div class="short-card">
+    <button class="short-close" onclick="closeShortVersion()" aria-label="Close the short version">&times;</button>
+    <div class="short-title" id="short-title">The 30-second version</div>
+    <ol class="short-list">
+      <li><b>The Line.</b> Started on the Chipotle line. Learned that speed is a kindness.</li>
+      <li><b>The Trick.</b> Watched a skater bail on a kickflip again and again, changing one thing each try until he landed it. That's troubleshooting.</li>
+      <li><b>The Bet.</b> Left a steady paycheck to start over in tech at zero.</li>
+      <li><b>The Climb.</b> Splunk release pipeline &rarr; field IT &rarr; 6&frac12; years at First Republic &rarr; the JPMorganChase migration &rarr; AVP at Citizens.</li>
+      <li><b>The Method.</b> Try. Change one variable. Write it down. Make it easier for the next person.</li>
+    </ol>
+    <div class="short-mission">I make tech easier for everyone.</div>
+    <div class="short-actions">
+      <a class="footer-link" href="https://www.linkedin.com/in/saneaux" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
+      <button class="short-btn" onclick="closeShortVersion(true)">read the full story &darr;</button>
+    </div>
+  </div>
+</dialog>
+
 <!-- ======================================================================
      MOMENTS — continuous vertical scroll
      ====================================================================== -->
@@ -1014,6 +1162,7 @@ body.reduced-motion * {
     <span>begin</span>
     <span class="arrow-icon">&#8595;</span>
   </a>
+  <button class="short-btn opening-short" onclick="openShortVersion()" aria-haspopup="dialog">short on time? the 30-second version</button>
 </section>
 
 <!-- MOMENT 2: THE LINE -->
@@ -1611,6 +1760,37 @@ function handleFixChoice(index) {
 // ==========================================================================
 // REDUCED MOTION TOGGLE
 // ==========================================================================
+
+// ==========================================================================
+// SHORT ON TIME — 30-second version dialog
+// ==========================================================================
+
+function openShortVersion() {
+  const dlg = document.getElementById('short-version');
+  if (dlg && !dlg.open) dlg.showModal();
+}
+
+function closeShortVersion(startStory) {
+  const dlg = document.getElementById('short-version');
+  if (dlg && dlg.open) dlg.close();
+  // From the title screen, "read the full story" starts the scroll
+  if (startStory && window.scrollY < window.innerHeight / 2) {
+    document.getElementById('moment-the-line').scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// Hide the corner button while the title screen (with its own button) is showing
+function updateShortToggle() {
+  const t = document.getElementById('short-toggle');
+  if (t) t.classList.toggle('on-opening', window.scrollY < window.innerHeight * 0.6);
+}
+window.addEventListener('scroll', updateShortToggle, { passive: true });
+updateShortToggle();
+
+// Click on the dimmed backdrop closes the card
+document.getElementById('short-version').addEventListener('click', (e) => {
+  if (e.target.id === 'short-version') closeShortVersion();
+});
 
 function toggleMotion() {
   const body = document.body;

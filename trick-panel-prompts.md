@@ -88,3 +88,52 @@ more height and time to catch.
 > the bolts, knees softly bent, shoulders level, arms relaxed, a small satisfied grin.
 > All four wheels are on the ground, with horizontal speed lines trailing behind. No
 > inset diagram, or a tiny one with a check mark next to the final foot setup.
+
+---
+
+# More images (new ink style)
+
+The trick panels now use crisp ink hatching (see `assets/trick-4.jpg`). Use the block
+below for any new image so the whole page matches, and upload `assets/trick-5.jpg`
+as the character and style reference.
+
+## Ink style block (paste at the start of each prompt)
+
+> Same character and drawing style as the reference image. Ink and pencil
+> illustration with fine cross-hatching on plain warm cream paper. Monochrome,
+> no color, no text, no lettering, no logos, no notebook frame or border.
+
+## The Line: `assets/the-line.jpg` (wide, 3:2)
+
+> [ink style block] A young man in a cap and apron working a fast-casual burrito
+> counter during a lunch rush: one hand holding a tortilla, the other reaching for a
+> scoop, steam rising from the food line, a long queue of customers in loose sketch
+> behind the glass sneeze guard. Focused, quick, kind expression. Generic restaurant:
+> no logos or brand names. Motion lines around his hands to show speed.
+
+## The Bet: `assets/the-bet.jpg` (wide, 3:2)
+
+> [ink style block] The same young man, now in a plain t-shirt, walking away from a
+> break-room table where three coworkers in aprons sit and watch him go. He carries
+> a skateboard under one arm and looks ahead toward an open doorway with bright
+> light coming through. The coworkers are sketched lightly; he is drawn in the most
+> detail. Hopeful, a little nervous.
+
+## The Climb: `assets/the-climb.jpg` (wide, 3:2), optional restyle
+
+> [ink style block] A winding road climbing a hillside, seen from a distance. Along
+> the road, in order from the bottom: a small watchtower, a low warehouse with
+> cables and server racks visible through a doorway, a tall office tower, a patch
+> of storm clouds with rain over a bridge, and at the top a calm summit with a
+> small figure carrying a skateboard. Loose pencil motion lines on the road.
+
+## Small doodle icons (square, 1:1, generate as one sheet)
+
+> [ink style block] A sheet of nine small, simple doodle icons in a 3×3 grid with
+> lots of space between them, each drawn in quick ink lines like a sketchbook
+> margin: an eye, a keyboard, a checked checkbox, a pencil, a burrito, a
+> skateboard, a watchtower, a laptop with a small status light, a rising sun.
+> Same line weight for all, no shading, plain cream background.
+
+Send me the sheet and I'll cut it into separate icons for the clippings and the
+Climb's waypoint dots.

@@ -50,6 +50,7 @@ pixel-tricks/
 - **Fix beat** — 3 clickable options (`FIX_OPTIONS`, each with its own BAIL/LANDED note), wrong→gray+note, correct→green+stamp
 - **Changed-variable notes** — `variable` on storyboard panels and `changed` on climb waypoints render as teal handwritten "↻ changed →" notes
 - **Auto-scroll chain**: Opening arrow → The Line → Storyboard end → Realization → The Bet → Fix beat correct → Footer
+- **30-second version** — `<dialog id="short-version">` index card with the whole story in 5 lines; opened by "short on time?" under the title and a fixed top-left button (hidden on the title screen)
 - **Reduced-motion toggle** — respects `prefers-reduced-motion`, toggle button top-right
 - **Party touch reveal** — `initPartyTouchReveal()` for mobile tap-to-show bubbles
 
@@ -60,3 +61,5 @@ pixel-tricks/
 - 7 clipping icons are Unicode placeholders, could be replaced with hand-drawn art
 - 5 waypoint icons in the climb are simple colored dots inside circles
 - Google Fonts loaded via CDN — for offline use, self-host the font files
+- `Genpics/` holds raw image generations and is git-ignored; finished images go in `assets/`. Prompts for every image live in `trick-panel-prompts.md`
+- Link-preview `og:image` is a relative path until the site has a hosted URL (LinkedIn needs an absolute one)
